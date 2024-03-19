@@ -37,7 +37,7 @@ export const authenticate = async (prevState: string | undefined, formData: Form
   }
 }
 
-export const UserSchema = z.object({
+const UserSchema = z.object({
   photo: z.string().url().optional(),
   name: z.string().optional(),
   bio: z.string().optional(),

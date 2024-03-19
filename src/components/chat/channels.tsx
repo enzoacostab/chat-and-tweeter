@@ -12,12 +12,14 @@ export default function Channels({
   channels, 
   params 
 }: { 
-  channels: ChannelType[], 
+  channels?: ChannelType[], 
   params?: string[][]
 }) {
   const [open, setOpen] = useState(false)
   const router = useRouter()
   
+  if (!channels) toast.error('Failed to fetch channels')
+
   const handleClick = async (channelId: string) => {
     const formData = new FormData()
     formData.append('channelId', channelId)

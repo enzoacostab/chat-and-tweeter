@@ -15,11 +15,11 @@ export const getChannels = async () => {
   noStore()
   try {
     await connectDb()
-    const channels = await Channel.find({}) as ChannelType[]
-    return channels
+    const data = await Channel.find({}).select('name _id')
+    const channels = data.map(channel => ({ ...channel._doc, _id: channel._id.toString() }))
+    return channels as ChannelType[]
   } catch (error) {    
     console.error('Failed to fetch channels:', error);
-    throw new Error('Failed to fetch channels.');
   }
 }
 
