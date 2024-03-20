@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { MdAdd } from 'react-icons/md'
 import NewChannelDialog from './new-channel-dialog'
-import { ChannelType, UserType } from '@/app/lib/definitions'
+import { ChannelType } from '@/app/lib/definitions'
 import { addMember } from '@/app/lib/actions/channel-actions'
 import { toast } from 'sonner'
 

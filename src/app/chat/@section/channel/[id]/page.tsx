@@ -4,7 +4,6 @@ import { UserType } from '@/app/lib/definitions'
 import { getChannel } from '@/app/lib/data';
 import Link from 'next/link';
 import { MdArrowBackIos } from 'react-icons/md';
-import { toast } from 'sonner';
 
 export default async function page({ 
   params, 

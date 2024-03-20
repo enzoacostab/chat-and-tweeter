@@ -19,5 +19,12 @@ export default auth((req) => {
 })
  
 export const config = {
-  matcher: ['/login' , '/register', '/chat', '/'],
+  matcher: [
+    '/login', 
+    '/register', 
+    '/chat', 
+    '/chat/channels', 
+    '/chat/channel/(.*)', 
+    '/'
+  ],
 };

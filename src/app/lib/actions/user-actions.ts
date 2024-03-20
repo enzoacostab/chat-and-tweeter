@@ -7,9 +7,8 @@ import { connectDb } from '../db';
 import User from '@/models/user';
 import bcrypt from 'bcryptjs'
 import { redirect } from 'next/navigation';
-import { UserType } from '../definitions';
 import { AuthError } from 'next-auth';
-import { signIn, signOut } from '../../../auth';
+import { signIn } from '../../../auth';
 import { getUser } from '../data';
 
 cloudinary.v2.config({
@@ -68,7 +67,7 @@ export const updateInfo = async (prevState: string | undefined, formData: FormDa
     const { _id } = await getUser()
 
     if (verifyEmail && verifyEmail._id != _id) {
-      return 'Email already in use'
+      return 'Another account already exists with that email'
     }
 
     await User.findByIdAndUpdate(_id, data)
@@ -111,7 +110,7 @@ export const createUser = async (prevState: string | undefined, formData: FormDa
     const alreadyExists = await User.findOne({ email: data.email })
     
     if (alreadyExists) {
-      return 'There is already a user with that email'
+      return 'A user already exists with that email'
     }
 
     const passwordHash = await bcrypt.hash(data.password!, 10)

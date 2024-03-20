@@ -56,12 +56,6 @@ export const addMember = async (prevState: string | undefined, formData: FormDat
   
   try {
     const channel = await Channel.findById(channelId).populate('members')
-    const userExist = await User.findById(userId)    
-    
-    if (!userExist) {
-      return "User doesn't exist"
-    }
-    
     const alreadyMember = channel.members.find((member: UserType) => member._id.toString() === userId)
     
     if (!alreadyMember) {

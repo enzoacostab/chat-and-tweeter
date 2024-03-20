@@ -11,11 +11,11 @@ export default function Main({
   channelId?: string
 }) {  
   return (
-    <main className='w-full h-full'>
-      <div className='p-3 h-[65px] flex items-center shadow-[0px_4px_4px_0px_#00000040]'>
+    <main className='w-full h-full flex flex-col'>
+      <div className='p-3 max-h-[65px] h-full flex items-center shadow-[0px_4px_4px_0px_#00000040]'>
         <h1 className='uppercase ml-20 md:ml-2'>{channel?.name}</h1>
       </div>
-      <section className='sm:py-10 py-4 sm:px-14 px-4 h-[calc(100%-65px)] flex flex-col'>
+      <section className='sm:py-10 py-4 sm:px-14 px-4 h-full flex flex-col'>
         <Messages channel={channel} channelId={channelId}/>
         <SendMessageForm channelId={channelId}/>
       </section>

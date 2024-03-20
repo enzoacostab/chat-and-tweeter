@@ -1,5 +1,5 @@
 import { auth } from "@/auth"
-import { ChannelType, Err, MessageType, UserType } from "./definitions"
+import { ChannelType, UserType } from "./definitions"
 import Channel from "@/models/channel"
 import { unstable_noStore as noStore } from "next/cache"
 import { connectDb } from "./db"

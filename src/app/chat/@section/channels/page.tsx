@@ -1,5 +1,5 @@
 import React from 'react'
-import { getChannels, getUser } from '@/app/lib/data'
+import { getChannels } from '@/app/lib/data'
 import Channels from '@/components/chat/channels'
 
 export default async function page({ searchParams }: { searchParams?: { menu: string } }) {

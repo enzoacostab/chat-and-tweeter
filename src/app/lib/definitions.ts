@@ -24,7 +24,3 @@ export interface MessageType {
   createdAt: Date,
   user: UserType
 }
-
-export interface Err {
-  message: string
-}

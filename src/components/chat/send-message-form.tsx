@@ -1,7 +1,6 @@
 'use client'
 
 import { createMessage } from '@/app/lib/actions/message-actions'
-import { UserType } from '@/app/lib/definitions'
 import React, { useEffect } from 'react'
 import { useFormState } from 'react-dom'
 import { MdSend } from 'react-icons/md'

@@ -3,7 +3,6 @@ import ChatMenu from '@/components/chat/chat-menu';
 import DropDownMenu from '@/components/drop-down-menux';
 import { getUser } from '../lib/data';
 import Nav from '@/components/nav';
-import Main from '@/components/chat/main';
 
 export default async function Layout({ 
   children,
@@ -12,15 +11,14 @@ export default async function Layout({
   children: React.ReactNode,
   section: React.ReactNode,
 }) {
-
   const user = await getUser()
 
   return (
-    <div className='flex h-screen text-[#E0E0E0] text-lg font-bold'>
+    <div className='flex h-[100dvh] text-[#E0E0E0] text-lg font-bold'>
       <ChatMenu>
         {section}
         <div className='mt-auto self-center'>
-          <DropDownMenu user={user} className='text-lg font-bold ml-6 capitalize'>
+          <DropDownMenu user={user} className='text-lg font-bold ml-6 w-[80px] capitalize'>
             <Nav position='top'/>
           </DropDownMenu>
         </div>
