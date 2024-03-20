@@ -56,7 +56,7 @@ export default function Messages({ channel, channelId }: { channel?: ChannelType
                   {message.user.name} 
                   <span className='text-sm font-medium ml-3'>{date.toLocaleString()}</span>
                 </p>
-                <p>{message.content}</p>
+                <p className='text-[rgb(var(--foreground-rgb))]'>{message.content}</p>
               </div>
             </div>
           </li>

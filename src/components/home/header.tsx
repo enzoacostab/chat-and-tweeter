@@ -1,6 +1,6 @@
 import { UserType } from '@/app/lib/definitions'
 import React from 'react'
-import DropDownMenu from '../drop-down-menux'
+import DropDownMenu from '../drop-down-menu'
 import Nav from '../nav'
 
 export default function Header({ user }: { user: UserType }) {

@@ -1,6 +1,6 @@
 import React from 'react'
 import ChatMenu from '@/components/chat/chat-menu';
-import DropDownMenu from '@/components/drop-down-menux';
+import DropDownMenu from '@/components/drop-down-menu';
 import { getUser } from '../lib/data';
 import Nav from '@/components/nav';
 
@@ -18,7 +18,7 @@ export default async function Layout({
       <ChatMenu>
         {section}
         <div className='mt-auto self-center'>
-          <DropDownMenu user={user} className='text-lg font-bold ml-6 w-[80px] capitalize'>
+          <DropDownMenu user={user} className='text-lg font-bold ml-6 min-w-[80px] mr-3 capitalize'>
             <Nav position='top'/>
           </DropDownMenu>
         </div>

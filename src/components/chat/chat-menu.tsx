@@ -26,7 +26,11 @@ export default function ChatMenu({ children }: { children: ReactNode }) {
     absolute transition-all ${!menuOpen ? '-left-[85%]' : 'left-0'} max-w-[85%] md:static`}>
       <div className='h-full flex flex-col'>
         {children}
-        <button onClick={handleClick} className={`md:hidden w-fit absolute transition-opacity hover:opacity-80 -top-1 p-2 rounded-xl mt-3 left-full ${!menuOpen ? 'ml-3' : 'bg-[#120F13] ml-1.5 shadow-[0px_4px_4px_0px_#00000040]'}`}>
+        <button 
+          onClick={handleClick} 
+          className={`md:hidden w-fit text-[rgb(var(--foreground-rgb))] absolute transition-opacity hover:opacity-80 -top-1 p-2 rounded-xl 
+          mt-3 left-full ${!menuOpen ? 'ml-3' : 'bg-[#120F13] ml-1.5 shadow-[0px_4px_4px_0px_#00000040]'}`}
+        >
           {!menuOpen ? (
             <MdMenu size={30}/>
           ) : (
