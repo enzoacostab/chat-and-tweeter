@@ -13,7 +13,7 @@ export default function Main({
   return (
     <main className='w-full h-full flex flex-col'>
       <div className='p-3 max-h-[65px] h-full flex items-center shadow-[0px_4px_4px_0px_#00000040]'>
-        <h1 className='uppercase ml-20 md:ml-2 text-[rgb(var(--foreground-rgb))]'>{channel?.name}</h1>
+        <h1 className='uppercase ml-20 md:ml-2 text-foreground'>{channel?.name}</h1>
       </div>
       <section className='sm:py-10 py-4 sm:px-14 px-4 h-full flex flex-col'>
         <Messages channel={channel} channelId={channelId}/>

@@ -5,7 +5,7 @@ import React from 'react'
 export default function LoginProviders() {
   
   return (
-    <div className="flex disabled:*:bg-[rgb(var(--background-rgb))] *:h-[42px] justify-between w-full *:transition-colors *:rounded-full hover:*:bg-[rgb(var(--foreground-rgb))]">
+    <div className="flex disabled:*:bg-background *:h-[42px] justify-between w-full *:transition-colors *:rounded-full hover:*:bg-foreground">
       <form action={async () => {
         'use server'
         await signIn('google')
