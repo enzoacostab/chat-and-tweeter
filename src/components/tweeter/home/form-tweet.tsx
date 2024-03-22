@@ -1,10 +1,10 @@
 'use client'
 
 import React, { useState } from 'react'
-import { MdImage, MdOutlineImage } from 'react-icons/md'
-import WhoReply from './who-reply'
+import { MdOutlineImage } from 'react-icons/md'
+import WhoReply from './who-can-reply'
 
-export default function TweeterHomeForm() {
+export default function FormTweet() {
   const [text, setText] = useState<string>('')
   
   return (
@@ -14,7 +14,7 @@ export default function TweeterHomeForm() {
         contentEditable={true} 
         className={`h-auto w-full ${text ? 'static' : 'absolute'} outline-none mb-4`}
       />
-      <p className={`text-[#BDBDBD] ${text ? 'hidden' : 'block'} mb-4`}>
+      <p className={`text-placeholder ${text ? 'hidden' : 'block'} mb-4`}>
         What’s happening?
       </p>
       <input 

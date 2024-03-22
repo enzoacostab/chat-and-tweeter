@@ -9,7 +9,7 @@ export default function TweeterNav() {
   const style = 'border-b-[#2F80ED] text-[#2F80ED] font-semibold'
 
   return (
-    <nav className='mt-auto text-sm pt-4 font-medium hidden sm:block'>
+    <nav className='mt-auto text-sm text-[#828282] pt-4 font-medium hidden sm:block'>
       <ul className='flex gap-5 h-full *:pb-4 *:rounded-sm *:px-3 *:transition-colors *:border-b-2'>
         <li className={`${pathname.includes('/home') ? style : 'border-b-transparent'}`}>
           <Link href={'/tweeter/home'}>

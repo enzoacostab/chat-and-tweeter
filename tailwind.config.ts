@@ -17,7 +17,12 @@ const config: Config = {
         "background": "rgb(var(--background-rgb))",
         "foreground": "rgb(var(--foreground-rgb))",
         "primary": "rgb(var(--primary))",
-        "secondary": "rgb(var(--secondary))"
+        "secondary": "rgb(var(--secondary))",
+        "text": "rgb(var(--text))",
+        "placeholder": "rgb(var(--placeholder))"
+      },
+      boxShadow: {
+        "card" : "0px 2px 4px 0px #0000000D"
       },
       animation: {
         "appear": "appear .2s",

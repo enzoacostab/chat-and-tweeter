@@ -6,3 +6,11 @@ export const type = (attribute: string) => {
     default: return "text"
   }
 }
+
+export const formatNumber = (number: number) => {
+  if (number >= 1000) {
+    return `${Math.floor(number/1000)}k`
+  }
+
+  return number.toString()
+}

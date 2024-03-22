@@ -2,7 +2,6 @@ import React from 'react'
 import Link from 'next/link'
 import { MdAccountCircle, MdPeople } from 'react-icons/md'
 import LogoutButton from './home/logout-button'
-import Image from 'next/image'
 import { TweeterIcon } from '../app/icons'
 
 export default function Nav({ position }: { position: "top" | "bottom" }) {
