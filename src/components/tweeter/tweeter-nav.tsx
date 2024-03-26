@@ -6,22 +6,27 @@ import Link from 'next/link'
 
 export default function TweeterNav() {
   const pathname = usePathname()
-  const style = 'border-b-[#2F80ED] text-[#2F80ED] font-semibold'
+
+  const style = (string: string) => {
+    if (pathname.includes(string)) {
+      return 'border-b-2 border-b-[#2F80ED] text-[#2F80ED] font-semibold'
+    }
+  }
 
   return (
-    <nav className='mt-auto text-sm text-[#828282] pt-4 font-medium hidden sm:block'>
-      <ul className='flex gap-5 h-full *:pb-4 *:rounded-sm *:px-3 *:transition-colors *:border-b-2'>
-        <li className={`${pathname.includes('/home') ? style : 'border-b-transparent'}`}>
+    <nav className='mt-auto text-sm text-[#828282] pt-4 font-medium hidden md:block'>
+      <ul className='flex gap-5 h-full *:pb-4 *:rounded-sm *:px-3 *:transition-colors'>
+        <li className={style('home')}>
           <Link href={'/tweeter/home'}>
             Home
           </Link>
         </li>
-        <li className={`${pathname.includes('/explore') ? style : 'border-b-transparent'}`}>
-          <Link href={'/tweeter/explore'}>
+        <li className={style('explore')}>
+          <Link href={'/tweeter/explore/top'}>
           Explore
           </Link>
         </li>
-        <li className={`${pathname.includes('/bookmarks') ? style : 'border-b-transparent'}`}>
+        <li className={style('bookmarks')}>
           <Link href={'/tweeter/bookmarks'}>
           Bookmarks
           </Link>

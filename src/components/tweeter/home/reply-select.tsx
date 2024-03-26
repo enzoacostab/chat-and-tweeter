@@ -1,12 +1,12 @@
 import React, { MouseEvent, useState } from 'react'
 import { MdPeople, MdPublic } from 'react-icons/md'
 
-export default function WhoCanReply() {
+export default function ReplySelect() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [whoCanReply, setWhoCanReply] = useState<string>('Everyone')
+  const [canReply, setCanReply] = useState<string>('Everyone')
 
   const handleClick = (e: MouseEvent<HTMLLabelElement>) => {
-    setWhoCanReply(e.currentTarget.textContent as string)
+    setCanReply(e.currentTarget.textContent as string)
     setMenuOpen(false)
   }
 
@@ -14,7 +14,7 @@ export default function WhoCanReply() {
     <div className='relative flex flex-col text-xs items-center justify-center'>
       <button type='button' onClick={() => setMenuOpen(prev => !prev)} className='ml-3 flex gap-2 text-[#2F80ED] items-center'>
         <MdPublic size={20}/>
-        {whoCanReply} can reply
+        {canReply} can reply
       </button>
       <div className={`absolute left-2 py-2 border border-secondary px-3 top-11 min-w-[240px] rounded-xl bg-primary transition-all ${menuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
         <p className='font-semibold text-foreground'>Who can reply?</p>
@@ -26,18 +26,18 @@ export default function WhoCanReply() {
             <input 
               defaultChecked 
               type="radio" 
-              name="whoCanReply" 
+              name="canReply" 
               value='everyone' 
               className='appearance-none'
             /> 
           </label>
           <label onClick={handleClick}>
             <MdPeople size={20}/>
-            Only followers
+            People you follow
             <input 
               type="radio" 
-              name="whoCanReply" 
-              value='only followers' 
+              name="canReply" 
+              value='only followed' 
               className='appearance-none'
             />
           </label>

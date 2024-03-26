@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from 'react'
-import { createChannel } from '@/app/lib/actions/channel-actions'
+import { createChannel } from '@/app/lib/actions/channel'
 import { useFormState } from 'react-dom'
 import { toast } from 'sonner'
 

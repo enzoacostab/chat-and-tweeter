@@ -5,7 +5,6 @@ import { z } from "zod";
 import { connectDb } from "../db";
 import { UserType } from '../definitions';
 import { revalidatePath } from "next/cache";
-import User from "@/models/user";
 import { getUser } from "../data";
 
 const CreateChannel = z.object({

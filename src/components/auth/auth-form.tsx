@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react'
 import { MdHttps, MdMail } from "react-icons/md";
 import { useFormState } from 'react-dom'
-import { authenticate, createUser } from '@/app/lib/actions/user-actions'
+import { authenticate, createUser } from '@/app/lib/actions/user'
 import SubmitButton from './submit-button';
 import { toast } from 'sonner';
 

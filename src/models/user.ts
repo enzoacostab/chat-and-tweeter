@@ -21,6 +21,17 @@ const userSchema = new Schema({
   },
   phone: {
     type: String,
+  },
+  followers: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }],
+  following: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }],
+  header: {
+    type: String
   }
 })
 

@@ -7,9 +7,15 @@ export const type = (attribute: string) => {
   }
 }
 
-export const formatNumber = (number: number) => {
+export const formatNumber = (number: number | undefined) => {
+  if (!number) return '0'
+  
+  if (number >= 1000000) {
+    return `${Math.floor(number/1000000)}M`
+  }
+
   if (number >= 1000) {
-    return `${Math.floor(number/1000)}k`
+    return `${Math.floor(number/1000)}K`
   }
 
   return number.toString()

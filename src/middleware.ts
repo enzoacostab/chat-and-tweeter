@@ -22,9 +22,9 @@ export const config = {
   matcher: [
     '/login', 
     '/register', 
-    '/chat', 
-    '/chat/channels', 
-    '/chat/channel/(.*)', 
-    '/'
+    '/chat/(.*)', 
+    '/tweeter/(.*)', 
+    '/',
+
   ],
 };

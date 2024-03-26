@@ -1,11 +1,11 @@
 'use client'
 
-import { updateInfo } from '@/app/lib/actions/user-actions'
+import { updateInfo } from '@/app/lib/actions/user'
 import { attributes } from '@/app/lib/data'
 import { useFormState, useFormStatus } from 'react-dom'
 import { type } from '@/app/lib/utils'
 import { toast } from 'sonner'
-import { uploadImage } from '@/app/lib/actions/user-actions'
+import { uploadImage } from '@/app/lib/actions/user'
 import { UserType } from '@/app/lib/definitions'
 import Image from 'next/image'
 import React, { useEffect, useState, useTransition } from 'react'

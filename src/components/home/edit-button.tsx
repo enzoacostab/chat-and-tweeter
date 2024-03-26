@@ -15,7 +15,7 @@ export default function EditButton() {
   }
 
   return (
-    <button onClick={handleEdit} className='border border-[#828282] hover:border-current hover:text-current transition-colors h-fit py-2 px-8 text-lg text-[#828282] rounded-xl'>
+    <button onClick={handleEdit} className='border border-placeholder hover:border-text hover:text-text transition-colors h-fit py-2 px-8 text-lg text-placeholder rounded-xl'>
       Edit
     </button>
   )

@@ -1,8 +1,9 @@
 import { auth } from "@/auth"
-import { ChannelType, UserType } from "./definitions"
+import { ChannelType, TweetType, UserType } from "./definitions"
 import Channel from "@/models/channel"
 import { unstable_noStore as noStore } from "next/cache"
 import { connectDb } from "./db"
+import Tweet from "@/models/tweet"
 
 export const getUser = async () => {
   const session = await auth()
@@ -78,6 +79,27 @@ export const getMessages = async (id: string) => {
     }
 
     return channel as ChannelType
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getTweets = async (ids: string[] | undefined) => {
+  noStore()
+  
+  try {
+    await connectDb()
+    const data = await Tweet.find({}).populate('user', 'name photo _id')
+    const tweets = data.map((tweet: any) => ({
+      ...tweet._doc,
+      _id: tweet._id.toString(),
+      user: {
+        ...tweet.user._doc,
+        _id: tweet.user._id.toString(),
+      }
+    }))
+
+    return tweets as TweetType[]
   } catch (error) {
     console.log(error);
   }
