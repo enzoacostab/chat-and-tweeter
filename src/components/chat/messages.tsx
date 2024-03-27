@@ -40,7 +40,6 @@ export default function Messages({ channel, channelId }: { channel?: ChannelType
       {messages?.map((message: MessageType, i: number) => {
         const date = new Date(message?.createdAt)
         const prevDate = new Date(messages[i-1]?.createdAt)
-        const photo = message.user.photo
         
         return (
           <li key={message._id}>
@@ -50,10 +49,10 @@ export default function Messages({ channel, channelId }: { channel?: ChannelType
               </div> 
             ) : null}
             <div className='flex mt-10'>
-              <Image src={message.user.photo || ''} className='rounded-lg max-h-[42px]' width={42} height={42} alt="profile image" />
+              <Image src={message.user?.photo || ''} className='rounded-lg max-h-[42px]' width={42} height={42} alt="profile image" />
               <div className='text-lg font-medium ml-5'>
                 <p className='text-[#828282] font-bold capitalize'>
-                  {message.user.name} 
+                  {message.user?.name} 
                   <span className='text-sm font-medium ml-3'>{date.toLocaleString()}</span>
                 </p>
                 <p className='text-foreground'>{message.content}</p>

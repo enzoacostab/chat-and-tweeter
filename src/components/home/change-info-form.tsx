@@ -71,7 +71,7 @@ export default function ChangeInfoForm({ user }: { user?: UserType }) {
               ) : (
                 <input 
                   type={type(attribute)} 
-                  defaultValue={attribute === 'password' ? '' : user?.[attribute as keyof UserType] || ''} 
+                  defaultValue={attribute === 'password' ? '' : user?.[attribute as keyof UserType] as string || ''} 
                   name={attribute} 
                   required={attribute === 'email' ? true : false} 
                   pattern={attribute === 'phone' ? "[0-9]{10}" : undefined} 

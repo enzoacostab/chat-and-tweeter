@@ -14,6 +14,13 @@ const messageSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: User
   }
+}, { 
+  versionKey: false,
+  toJSON: {
+    transform: function (doc, ret) {
+      ret._id = ret._id.toString()
+    }
+  }
 })
 
 const Message = mongoose.models?.Message || mongoose.model('Message', messageSchema)

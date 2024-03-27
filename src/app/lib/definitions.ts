@@ -40,9 +40,9 @@ export interface TweetType {
   createdAt: Date
   canReply: 'everyone' | 'only followed'
   comments?: CommentType[]
-  likes: UserType[]
-  retweets: UserType[]
-  saved: UserType[]
+  likes: string[]
+  retweets: string[]
+  saved: string[]
 }
 
 export interface CommentType {
@@ -51,5 +51,5 @@ export interface CommentType {
   media?: string
   user: UserType
   createdAt: Date
-  likesCount: number
+  likes: string[]
 }

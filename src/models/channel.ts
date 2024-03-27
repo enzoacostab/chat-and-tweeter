@@ -19,6 +19,13 @@ const channelSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: Message
   }],
+}, { 
+  versionKey: false,
+  toJSON: {
+    transform: function (doc, ret) {
+      ret._id = ret._id.toString()
+    }
+  }
 })
 
 const Channel = mongoose.models?.Channel || mongoose.model('Channel', channelSchema)

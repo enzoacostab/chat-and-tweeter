@@ -2,14 +2,10 @@ import React from 'react'
 import Image from 'next/image'
 import { formatNumber } from '@/app/lib/utils'
 import UpdateForm from './update-form'
-import { getRetweetsCount, getSavedCount } from '@/app/lib/data'
 import { TweetType, UserType } from '@/app/lib/definitions'
+import { MdFavoriteBorder } from 'react-icons/md'
 
 export default async function CardTweet({ tweet, user }: { tweet: TweetType, user: UserType }) {
-  const retweetsCount = await getRetweetsCount(tweet._id)
-  const savedCount = await getSavedCount(tweet._id)
-  const  isLikedByUser = tweet.likes?.some((userID) => userID === user?._id) ?? false
-
   return (
     <div className='w-full transition-all bg-primary py-3 px-4 rounded-xl shadow-card'>
       <div className='flex gap-4 items-center'>
@@ -29,14 +25,18 @@ export default async function CardTweet({ tweet, user }: { tweet: TweetType, use
             {formatNumber(tweet.comments?.length)} Comments
           </span>
           <span>
-            {formatNumber(retweetsCount)} Retweets
+            {formatNumber(tweet.retweets?.length)} Retweets
           </span>
           <span>
-            {formatNumber(savedCount)} Saved
+            {formatNumber(tweet.likes?.length)} Likes
+          </span>
+          <span>
+            {formatNumber(tweet.saved?.length)} Saved
           </span>
         </div>
       </div>
       <UpdateForm user={user} tweet={tweet}/>
+      
     </div>
   )
 }

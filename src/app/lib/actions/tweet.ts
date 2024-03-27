@@ -31,18 +31,83 @@ export const createTweet = async (prevState: string | undefined, formData: FormD
   revalidatePath('/tweet')
 }
 
-export const likeTweet = async (userId: string, tweetId: string) => {
+export const like = async (tweetId: string, userId: string) => {
   await connectDb()
 
   try {
-    const like = await Tweet.findOne({ likes: { $include: userId }, _id: tweetId });
-    
-    if (like) {
-      await Like.deleteOne({ user: userId, tweet: tweetId})
-    
-    } else {
-      await Like.create({ user: userId, tweet: tweetId })
-    }
+    await Tweet.updateOne({ _id: tweetId }, { 
+      $push: { likes: userId } 
+    })
+  } catch (error: any) {
+    return `Database error: ${error.message}`
+  }
+
+  revalidatePath('/tweets')
+}
+
+export const retweet = async (tweetId: string, userId: string) => {
+  await connectDb()
+
+  try {
+    await Tweet.updateOne({ _id: tweetId }, { 
+      $push: { retweets: userId } 
+    })
+  } catch (error: any) {
+    return `Database error: ${error.message}`
+  }
+
+  revalidatePath('/tweets')
+}
+
+export const save = async (tweetId: string, userId: string) => {
+  await connectDb()
+  
+  try {
+    await Tweet.updateOne({ _id: tweetId }, { 
+      $push: { saved: userId } 
+    })
+  } catch (error: any) {
+    return `Database error: ${error.message}`
+  }
+
+  revalidatePath('/tweets')
+}
+
+export const dislike = async (tweetId: string, userId: string) => {
+  await connectDb()
+
+  try {
+    await Tweet.updateOne({ _id: tweetId }, { 
+      $pull: { likes: userId } 
+    })
+  } catch (error: any) {
+    return `Database error: ${error.message}`
+  }
+
+  revalidatePath('/tweets')
+}
+
+export const unretweet = async (tweetId: string, userId: string) => {
+  await connectDb()
+
+  try {
+    await Tweet.updateOne({ _id: tweetId }, { 
+      $pull: { retweets: userId } 
+    })
+  } catch (error: any) {
+    return `Database error: ${error.message}`
+  }
+
+  revalidatePath('/tweets')
+}
+
+export const unsave = async (tweetId: string, userId: string) => {
+  await connectDb()
+  
+  try {
+    await Tweet.updateOne({ _id: tweetId }, { 
+      $pull: { saved: userId } 
+    })
   } catch (error: any) {
     return `Database error: ${error.message}`
   }

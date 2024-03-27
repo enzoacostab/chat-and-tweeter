@@ -25,10 +25,10 @@ const tweetSchema = new Schema({
     enum: ['everyone', 'only followed'],
     default: 'everyone'
   },
-  comments: {
+  comments: [{
     type: Schema.Types.ObjectId,
     ref: Comment
-  },
+  }],
   likes: [{
     type: Schema.Types.ObjectId,
     ref: User
@@ -41,8 +41,19 @@ const tweetSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: User
   }],
-}, { versionKey: false })
+}, { 
+  versionKey: false,
+  toJSON: {
+    transform: function (doc, ret) {
+      ret._id = ret._id.toString(),
+      ret.retweets = ret.retweets.map((e: Schema.Types.ObjectId) => e.toString())
+      ret.likes = ret.likes.map((e: Schema.Types.ObjectId) => e.toString())
+      ret.saved = ret.saved.map((e: Schema.Types.ObjectId) => e.toString())
+    }
+  } 
+})
 
+delete mongoose.models?.Tweet
 const Tweet = mongoose.models?.Tweet || mongoose.model('Tweet', tweetSchema)
 
 export default Tweet;

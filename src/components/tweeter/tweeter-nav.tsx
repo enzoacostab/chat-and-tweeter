@@ -10,6 +10,8 @@ export default function TweeterNav() {
   const style = (string: string) => {
     if (pathname.includes(string)) {
       return 'border-b-2 border-b-[#2F80ED] text-[#2F80ED] font-semibold'
+    } else {
+      return 'hover:text-foreground'
     }
   }
 

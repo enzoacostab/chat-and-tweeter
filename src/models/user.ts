@@ -33,6 +33,13 @@ const userSchema = new Schema({
   header: {
     type: String
   }
+}, { 
+  versionKey: false,
+  toJSON: {
+    transform: function (doc, ret) {
+      ret._id = ret._id.toString()
+    }
+  }
 })
 
 const User = mongoose.models?.User || mongoose.model('User', userSchema)

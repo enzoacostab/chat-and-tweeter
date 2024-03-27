@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import User from "./user";
+import Tweet from "./tweet";
 
 const commentSchema = new Schema({
   text: {
@@ -18,12 +19,20 @@ const commentSchema = new Schema({
     type: Date,
     default: () => new Date(),
   },
-  likesCount: {
-    type: Number,
-    default: 0
-  },
+  likes: [{
+    type: Schema.Types.ObjectId,
+    ref: User
+  }],
+}, { 
+  versionKey: false,
+  toJSON: {
+    transform: function (doc, ret) {
+      ret._id = ret._id.toString()
+    }
+  }
 })
 
+delete mongoose.models?.Comment
 const Comment = mongoose.models?.Comment || mongoose.model('Comment', commentSchema)
 
 export default Comment;

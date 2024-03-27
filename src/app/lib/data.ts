@@ -4,11 +4,11 @@ import Channel from "@/models/channel"
 import { unstable_noStore as noStore } from "next/cache"
 import { connectDb } from "./db"
 import Tweet from "@/models/tweet"
+import Comment from "@/models/comment"
 
 export const getUser = async () => {
   const session = await auth()
   const user: UserType | undefined = session?.user as UserType
-  
   return user
 }
 
@@ -17,7 +17,7 @@ export const getChannels = async () => {
   try {
     await connectDb()
     const data = await Channel.find({}).select('name _id')
-    const channels = data.map(channel => ({ ...channel._doc, _id: channel._id.toString() }))
+    const channels = data.map((channel: any) => channel.toJSON())
     return channels as ChannelType[]
   } catch (error) {    
     console.error('Failed to fetch channels:', error);
@@ -36,12 +36,7 @@ export const getChannel = async (id: string) => {
         select: 'name photo _id'
       }])
       .select('-messages')
-
-    const channel = {
-      ...data._doc,
-      members: data.members.map((e: any) => ({ ...e._doc }))
-    }
-    
+    const channel = data.toJSON()
     return channel as ChannelType
   } catch (error) {
     console.log(error);
@@ -66,18 +61,7 @@ export const getMessages = async (id: string) => {
         },
       })
 
-    const channel = {
-      name: data.name,
-      messages: data.messages.map((message: any) => ({ 
-        ...message._doc,
-        _id: message._id.toString(),
-        user: {
-          ...message.user._doc,
-          _id: message.user._id.toString()
-        }
-      }))
-    }
-
+    const channel = data.toJSON()
     return channel as ChannelType
   } catch (error) {
     console.log(error);
@@ -89,16 +73,18 @@ export const getTweets = async (ids: string[] | undefined) => {
   
   try {
     await connectDb()
-    const data = await Tweet.find({}).populate('user', 'name photo _id')
-    const tweets = data.map((tweet: any) => ({
-      ...tweet._doc,
-      _id: tweet._id.toString(),
-      user: {
-        ...tweet.user._doc,
-        _id: tweet.user._id.toString(),
-      }
-    }))
-
+    const data = await Tweet.find({})
+      .populate('user', 'name photo _id')
+      .populate({ 
+        path: 'comments',
+        model: 'Comment',
+        populate: {
+          path: 'user',
+          select: 'name photo'
+        },
+        
+      })
+    const tweets = data.map((tweet: any) => tweet.toJSON())
     return tweets as TweetType[]
   } catch (error) {
     console.log(error);
