@@ -14,37 +14,6 @@ export default async function page() {
   const user = await getUser()
   const tweets = await getTweets(undefined)
   
-  /*[{
-    user: {
-      name: 'John Doe',
-      photo: '/vercel.svg'
-    },
-    comments: [{
-      _id: 'wkcmk',
-      user: {
-        _id: 'sdw',
-        name: 'John Doe',
-        photo: '/Google.svg'
-      },
-      createdAt: new Date(),
-      text: 'Wow, this is amazing!',
-      media: undefined,
-      savedCount:  123,
-      retweetsCount: 21312,
-      likesCount: 2131,
-      whoCanReply: 'everyone', // everyone | only followers
-
-    }],
-    createdAt: new Date(),
-    text: 'Hello World! This is my first Tweet.',
-    media: '/next.svg',
-    savedCount:  123,
-    retweetsCount: 21312,
-    likesCount: 2131,
-    whoCanReply: 'everyone', // everyone | only followers
-    _id: 'fewF',
-  }]*/
-
   const suggestedUsers = [{
     _id: 'trg',
     name: 'John Doe',

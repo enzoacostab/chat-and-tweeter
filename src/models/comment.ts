@@ -15,6 +15,10 @@ const commentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: User,
   },
+  tweetId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Tweet',
+  },
   createdAt: {
     type: Date,
     default: () => new Date(),
@@ -28,11 +32,12 @@ const commentSchema = new Schema({
   toJSON: {
     transform: function (doc, ret) {
       ret._id = ret._id.toString()
+      ret.tweetId = ret.tweetId.toString()
+      ret.likes = ret.likes?.map((e: Schema.Types.ObjectId) => e.toString())
     }
   }
 })
 
-delete mongoose.models?.Comment
 const Comment = mongoose.models?.Comment || mongoose.model('Comment', commentSchema)
 
 export default Comment;

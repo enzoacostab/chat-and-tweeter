@@ -6,7 +6,7 @@ export interface UserType {
   bio?: string
   phone?: string
   password: string
-  followers: UserType[]
+  followers: UserType[] 
   following: UserType[]
   header: string
 }

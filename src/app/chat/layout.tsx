@@ -19,7 +19,7 @@ export default async function Layout({
         {section}
         <div className='mt-auto self-center'>
           <DropDownMenu user={user} className='text-lg font-bold ml-6 min-w-[80px] mr-3 capitalize'>
-            <Nav position='top'/>
+            <Nav position='top' userId={user._id}/>
           </DropDownMenu>
         </div>
       </ChatMenu>

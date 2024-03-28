@@ -7,15 +7,18 @@ import Image from 'next/image'
 import React, { useState, useTransition } from 'react'
 import { MdBookmarkBorder, MdFavoriteBorder, MdLoop, MdOutlineModeComment } from 'react-icons/md'
 import CommentForm from './comment-form'
+import { dislikeComment, likeComment } from '@/app/lib/actions/comment'
+import { useRouter } from 'next/navigation'
 
 export default function UpdateForm({ tweet, user }: { tweet: TweetType, user: UserType }) {
   const [showComments, setShowComments] = useState(true)
-  const isLikedByUser = tweet.likes?.includes(user._id)
   const isSavedByUser = tweet.saved?.includes(user._id) 
+  const isLikedByUser = tweet.likes?.includes(user._id)
   const isRetweetedByUser = tweet.retweets?.includes(user._id)
   const [pending, startTransition] = useTransition()
+  const { push } = useRouter()
 
-  const handleClick = (action: string) => {
+  const handleUpdateTweet = (action: string) => {
     startTransition(async () => {
       switch (action) {
         case 'like': 
@@ -42,6 +45,16 @@ export default function UpdateForm({ tweet, user }: { tweet: TweetType, user: Us
           break
       }
     })
+  } 
+
+  const handleUpdateComment = (isLiked: boolean, commentId: string) => {
+    startTransition(async () => {
+      if (isLiked) {
+        await dislikeComment(commentId, user._id)
+      } else {
+        await likeComment(commentId, user._id)
+      }
+    })
   }
 
   return (
@@ -55,7 +68,7 @@ export default function UpdateForm({ tweet, user }: { tweet: TweetType, user: Us
         <button 
           disabled={pending} 
           className={isRetweetedByUser ? 'text-[#27AE60]' : ''} 
-          onClick={() => handleClick('retweet')}
+          onClick={() => handleUpdateTweet('retweet')}
         >
           <MdLoop size={20}/>
           <span className='hidden sm:block'>Retweet</span>
@@ -63,7 +76,7 @@ export default function UpdateForm({ tweet, user }: { tweet: TweetType, user: Us
         <button 
           disabled={pending} 
           className={isLikedByUser ? 'text-[#EB5757]' : ''} 
-          onClick={() => handleClick('like')}
+          onClick={() => handleUpdateTweet('like')}
         > 
           <MdFavoriteBorder size={20}/>
           <span className='hidden sm:block'>Like</span>
@@ -71,43 +84,60 @@ export default function UpdateForm({ tweet, user }: { tweet: TweetType, user: Us
         <button 
           disabled={pending} 
           className={isSavedByUser ? 'text-[#2D9CDB]' : ''}
-          onClick={() => handleClick('save')}
+          onClick={() => handleUpdateTweet('save')}
         >
           <MdBookmarkBorder size={20}/>
           <span className='hidden sm:block'>Save</span>
         </button>
       </div>
-      <Image src={user?.photo || ''} width={40} height={40} className='h-[40px] w-[40px] float-left mr-3 mt-2 rounded-lg bg-background' alt='Tweet user profile photo' />
-      <CommentForm userId={user._id} tweetId={tweet._id} pending={pending} startTransition={startTransition}/>
+      <Image 
+        src={user?.photo || ''} 
+        width={40} 
+        height={40} 
+        className='h-[40px] w-[40px] float-left mr-3 mt-2 rounded-lg bg-background' 
+        alt='Tweet user profile photo' 
+      />
+      <CommentForm userId={user?._id} tweetId={tweet._id} pending={pending} startTransition={startTransition}/>
       <ul className={`mt-2 pt-3 border-t border-y-background transition-all ${!showComments ? 'relative h-0 overflow-hidden opacity-0' : ''}`}>
-        {tweet.comments?.map((comment: CommentType) => 
-          <li key={comment._id} className='flex gap-2 mt-3'>
-            <Image src={comment.user?.photo || ''} width={40} height={40} className='h-[40px] w-[40px] rounded-lg bg-background' alt='Tweet user profile photo' />
-            <div className='w-full'>
-              <div className='bg-background2 rounded-lg p-3'>
-                <p className='font-medium text-sm'>
-                  {comment.user.name}
-                  <span className='text-placeholder ml-3 text-xs'>{comment.createdAt.toDateString()}</span>
-                </p>
-                <p className='text-text mt-1'>
-                  {comment.text}
-                </p>
-                {comment.media && ( 
-                  <Image src={comment.media} width={500} height={100} alt='comment image' className='w-full mt-3 max-h-[200px] h-auto rounded-lg object-cover'/>
-                )}
+        {tweet.comments?.map((comment: CommentType) => {
+          const commentIsLiked = comment.likes?.includes(user._id)
+
+          return (
+            <li key={comment._id} className='flex gap-2 mt-3'>
+              <Image 
+                onClick={() => push(`profile/${comment.user._id}/tweets`)} 
+                src={comment.user?.photo || ''} 
+                width={40} 
+                height={40} 
+                className='h-[40px] w-[40px] rounded-lg cursor-pointer bg-background' 
+                alt='Tweet user profile photo' 
+              />
+              <div className='w-full'>
+                <div className='bg-background2 rounded-lg p-3'>
+                  <p className='font-medium text-sm'>
+                    <span className='cursor-pointer' onClick={() => push(`profile/${comment.user?._id}/tweets`)}>{comment.user?.name}</span>
+                    <span className='text-placeholder ml-3 text-xs'>{comment.createdAt?.toDateString()}</span>
+                  </p>
+                  <p className='text-text mt-1'>
+                    {comment.text}
+                  </p>
+                  {comment.media && ( 
+                    <Image src={comment.media} width={500} height={100} alt='comment image' className='w-full mt-3 max-h-[200px] h-auto rounded-lg object-cover'/>
+                  )}
+                </div>
+                <div className='flex gap-2 mt-1 text-placeholder font-semibold text-xs'>
+                  <button disabled={pending} onClick={() => handleUpdateComment(commentIsLiked, comment._id)} className={`flex ${commentIsLiked ? 'text-[#EB5757]' : 'hover:text-text'} transition-colors items-center gap-1`}>
+                    <MdFavoriteBorder size={16}/>
+                    Like
+                  </button>
+                  ·
+                  <span>
+                    {formatNumber(comment.likes?.length)} Likes
+                  </span>
+                </div>
               </div>
-              <div className='flex gap-2 mt-1 text-placeholder font-semibold text-xs'>
-                <button className='flex hover:text-text items-center gap-1'>
-                  <MdFavoriteBorder size={16}/>
-                  Like
-                </button>
-                ·
-                <span>
-                  {formatNumber(comment.likes.length)} Likes
-                </span>
-              </div>
-            </div>
-          </li>  
+            </li> 
+          )}
         )}
       </ul>
     </>

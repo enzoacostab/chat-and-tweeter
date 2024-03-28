@@ -21,14 +21,42 @@ export const createComment = async (prevState: string | undefined, formData: For
     return `Error creating comment: ${validatedFields.error.message}`
   }
 
-  const { tweetId, ...data } = validatedFields.data
+  const data = validatedFields.data
   
   try {
     const newComment = await Comment.create(data);
-    await Tweet.findByIdAndUpdate(tweetId, { $push: { comments: newComment._id.toString() } })
+    await Tweet.findByIdAndUpdate(data.tweetId, { $push: { comments: newComment._id.toString() } })
   } catch (error: any) {
     return `Database error: ${error.message}`
   }
   
   revalidatePath('/tweet')
+}
+
+export const likeComment = async (commentId: string, userId: string) => {
+  await connectDb()
+
+  try {
+    await Comment.updateOne({ _id: commentId }, { 
+      $push: { likes: userId } 
+    })
+  } catch (error: any) {
+    return `Database error: ${error.message}`
+  }
+
+  revalidatePath('/tweets')
+}
+
+export const dislikeComment = async (commentId: string, userId: string) => {
+  await connectDb()
+
+  try {
+    await Comment.updateOne({ _id: commentId }, { 
+      $pull: { likes: userId } 
+    })
+  } catch (error: any) {
+    return `Database error: ${error.message}`
+  }
+
+  revalidatePath('/tweets')
 }

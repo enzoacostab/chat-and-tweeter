@@ -123,3 +123,37 @@ export const createUser = async (prevState: string | undefined, formData: FormDa
 
   redirect('/login')
 }
+
+export const follow = async (userId: string, userIdToFollow: string) => {
+  await connectDb()
+
+  try {
+    await User.findByIdAndUpdate(userIdToFollow, {
+      $push: { followers: userId }
+    })
+    await User.findByIdAndUpdate(userId, {
+      $push: { following: userIdToFollow }
+    })
+  } catch (error) {
+    return 'Database error. Failed to follow user';
+  }
+
+  revalidatePath('/tweeter')
+}
+
+export const unfollow = async (userId: string, userIdToFollow: string) => {
+  await connectDb()
+
+  try {
+    await User.findByIdAndUpdate(userIdToFollow, {
+      $pull: { followers: userId }
+    })
+    await User.findByIdAndUpdate(userId, {
+      $pull: { following: userIdToFollow }
+    })
+  } catch (error) {
+    return 'Database error. Failed to unfollow user';
+  }
+
+  revalidatePath('/tweeter')
+}

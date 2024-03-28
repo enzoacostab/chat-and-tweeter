@@ -38,6 +38,8 @@ const userSchema = new Schema({
   toJSON: {
     transform: function (doc, ret) {
       ret._id = ret._id.toString()
+      ret.followers = ret.followers?.map((e: Schema.Types.ObjectId) => e.toString())
+      ret.following = ret.following?.map((e: Schema.Types.ObjectId) => e.toString())
     }
   }
 })

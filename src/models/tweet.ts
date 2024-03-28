@@ -53,7 +53,6 @@ const tweetSchema = new Schema({
   } 
 })
 
-delete mongoose.models?.Tweet
 const Tweet = mongoose.models?.Tweet || mongoose.model('Tweet', tweetSchema)
 
 export default Tweet;

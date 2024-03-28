@@ -3,15 +3,19 @@ import Image from 'next/image'
 import { formatNumber } from '@/app/lib/utils'
 import UpdateForm from './update-form'
 import { TweetType, UserType } from '@/app/lib/definitions'
-import { MdFavoriteBorder } from 'react-icons/md'
+import Link from 'next/link'
 
-export default async function CardTweet({ tweet, user }: { tweet: TweetType, user: UserType }) {
+export default function CardTweet({ tweet, user }: { tweet: TweetType, user: UserType }) {
   return (
     <div className='w-full transition-all bg-primary py-3 px-4 rounded-xl shadow-card'>
       <div className='flex gap-4 items-center'>
-        <Image src={tweet.user?.photo || ''} width={40} height={40} className='h-[40px] w-[40px] rounded-lg bg-background' alt='Tweet user profile photo' />
+        <Link href={`profile/${tweet.user._id}/tweets`}>
+          <Image src={tweet.user?.photo || ''} width={40} height={40} className='h-[40px] w-[40px] rounded-lg bg-background' alt='Tweet user profile photo' />
+        </Link>
         <div> 
-          <h2 className="font-medium">{tweet.user.name}</h2>
+          <Link href={`profile/${tweet.user._id}/tweets`}>
+            <h2 className="font-medium">{tweet.user.name}</h2>
+          </Link>
           <span className="text-xs mt-0.5 font-medium text-placeholder">{tweet.createdAt.toDateString()}</span>
         </div>
       </div>
@@ -36,7 +40,6 @@ export default async function CardTweet({ tweet, user }: { tweet: TweetType, use
         </div>
       </div>
       <UpdateForm user={user} tweet={tweet}/>
-      
     </div>
   )
 }

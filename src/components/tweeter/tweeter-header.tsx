@@ -14,7 +14,7 @@ export default async function TweeterHeader() {
       <TweeterIcon className='text-[#2F80ED] md:hidden' width={41} height={28}/>
       <TweeterNav/>
       <DropDownMenu user={user}>
-        <Nav position='bottom'/>
+        <Nav position='bottom' userId={user._id}/>
       </DropDownMenu>
     </header>
   )

@@ -10,7 +10,7 @@ export default function Header({ user }: { user: UserType }) {
       <div className="bg-[url('/devchallenges.svg')] dark:bg-[url('/devchallenges-light.svg')] bg-no-repeat h-[20px] w-[140px]"></div>
       <div className='w-fit relative'>
         <DropDownMenu user={user}>
-          <Nav position='bottom'/>
+          <Nav position='bottom' userId={user._id}/>
         </DropDownMenu>
       </div>
     </header>
