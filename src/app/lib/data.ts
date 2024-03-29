@@ -1,5 +1,5 @@
 import { auth } from "@/auth"
-import { ChannelType, TweetType, UserType } from "./definitions"
+import { AuthUser, ChannelType, TweetType, UserType } from "./definitions"
 import Channel from "@/models/channel"
 import { unstable_noStore as noStore } from "next/cache"
 import { connectDb } from "./db"
@@ -9,7 +9,7 @@ import Comment from "@/models/comment"
 
 export const getUser = async () => {
   const session = await auth()
-  const user: UserType | undefined = session?.user as UserType
+  const user: AuthUser | undefined = session?.user as AuthUser
   return user
 }
 

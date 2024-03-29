@@ -6,13 +6,12 @@ import bcrypt from 'bcryptjs';
 import { authConfig } from "./auth.config";
 import User from "./models/user";
 import { connectDb } from "./app/lib/db";
-import type { UserType } from "./app/lib/definitions";
+import type { AuthUser } from "./app/lib/definitions";
 import GoogleProvider from "next-auth/providers/google";
 import TwitterProvider from "next-auth/providers/twitter";
 import FacebookProvider from "next-auth/providers/facebook";
 
-
-const getUser = async (userEmail: string): Promise<UserType | null> => {
+const getUser = async (userEmail: string): Promise<AuthUser | null> => {
   try {
     await connectDb()
     const user = await User.findOne({ email: userEmail });
@@ -20,7 +19,7 @@ const getUser = async (userEmail: string): Promise<UserType | null> => {
     if (!user) return null
 
     const { name, email, password, phone, photo, bio, _id } = user._doc
-    const obj: UserType = { 
+    const obj: AuthUser = { 
       _id: _id.toString(),
       name: name ?? '',
       email,
@@ -70,7 +69,7 @@ export const {
     },
     async session({ session, token }) {
       const { image, ...restUser } = session.user
-      session.user = { ...restUser, ...token.user as UserType }
+      session.user = { ...restUser, ...token.user as AuthUser }
       
       return session
     }

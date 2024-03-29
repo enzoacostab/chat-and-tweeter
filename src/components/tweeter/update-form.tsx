@@ -1,7 +1,7 @@
 'use client'
 
 import { like, retweet, save, dislike, unretweet, unsave } from '@/app/lib/actions/tweet'
-import { CommentType, TweetType, UserType } from '@/app/lib/definitions'
+import { AuthUser, CommentType, TweetType } from '@/app/lib/definitions'
 import { formatNumber } from '@/app/lib/utils'
 import Image from 'next/image'
 import React, { useState, useTransition } from 'react'
@@ -10,7 +10,7 @@ import CommentForm from './comment-form'
 import { dislikeComment, likeComment } from '@/app/lib/actions/comment'
 import Link from 'next/link'
 
-export default function UpdateForm({ tweet, user }: { tweet: TweetType, user: UserType }) {
+export default function UpdateForm({ tweet, user }: { tweet: TweetType, user: AuthUser }) {
   const [showComments, setShowComments] = useState(true)
   const isSavedByUser = tweet.saved?.includes(user._id) 
   const isLikedByUser = tweet.likes?.includes(user._id)

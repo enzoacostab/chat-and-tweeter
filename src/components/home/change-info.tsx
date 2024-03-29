@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import React from 'react'
 import { MdArrowBackIos } from 'react-icons/md'
-import { UserType } from '@/app/lib/definitions'
+import { AuthUser } from '@/app/lib/definitions'
 import ChangeInfoForm from './change-info-form'
 
-export default function ChangeInfo({ user }: { user?: UserType}) {
+export default function ChangeInfo({ user }: { user?: AuthUser}) {
   return (
     <>
       <div className='max-w-[850px] w-full mb-3 px-5 lg:px-0'>

@@ -1,6 +1,6 @@
 import { getUserById } from '@/app/lib/data'
 import Nav from '@/components/tweeter/nav'
-import UserCard from '@/components/tweeter/profile/user-card'
+import UserCard from '@/components/tweeter/profile/user-profile-card'
 import Image from 'next/image'
 import React, { ReactNode } from 'react'
 

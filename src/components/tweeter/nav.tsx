@@ -16,7 +16,6 @@ export default function Nav({
 }) {
   const f2 = filter2.split(' & ').join('-')
   const pathname = usePathname().split('/').at(-1)
-  const path = pathname
   const searchParams = useSearchParams()
   const { push } = useRouter()
 

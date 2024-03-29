@@ -5,7 +5,7 @@ import Image from 'next/image'
 import React from 'react'
 import FollowUnfollowButton from './follow-unfollow-button'
 
-export default async function UserCard({ user }: { user: UserType }) {
+export default async function UserProfileCard({ user }: { user: UserType }) {
   const loggedUser = await getUser()
   const myProfile = loggedUser._id === user._id
   const followedByUser = user.followers?.includes(loggedUser._id as any)

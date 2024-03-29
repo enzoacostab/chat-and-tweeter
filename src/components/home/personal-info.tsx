@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import React from 'react'
 import EditButton from './edit-button'
-import { UserType } from '@/app/lib/definitions'
+import { AuthUser } from '@/app/lib/definitions'
 import { attributes } from '@/app/lib/data'
 
-export default function PersonalInfo({ user }: { user?: UserType }) {
+export default function PersonalInfo({ user }: { user?: AuthUser }) {
   return (
     <>
       <h1 className='text-2xl lg:text-4xl mx-auto'>Personal info</h1>
@@ -23,7 +23,7 @@ export default function PersonalInfo({ user }: { user?: UserType }) {
               <h3 className='uppercase text-[#BDBDBD] w-[30%] min-w-[100px] text-sm font-medium'>{attribute}</h3>
               {attribute === 'photo' 
                 ? <Image src={user?.[attribute] || ''} width={72} height={72} className='rounded-lg' alt="Profile" />
-                : <p className='text-base font-medium'>{attribute === 'password' ? '● '.repeat(10) : user?.[attribute as keyof UserType]}</p>}
+                : <p className='text-base font-medium'>{attribute === 'password' ? '● '.repeat(10) : user?.[attribute as keyof AuthUser]}</p>}
             </li>
           )}
         </ul>

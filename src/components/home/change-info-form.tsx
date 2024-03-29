@@ -6,13 +6,13 @@ import { useFormState, useFormStatus } from 'react-dom'
 import { type } from '@/app/lib/utils'
 import { toast } from 'sonner'
 import { uploadImage } from '@/app/lib/actions/user'
-import { UserType } from '@/app/lib/definitions'
+import { AuthUser } from '@/app/lib/definitions'
 import Image from 'next/image'
 import React, { useEffect, useState, useTransition } from 'react'
 import { LuLoader2 } from 'react-icons/lu'
 import { MdPhotoCamera } from 'react-icons/md'
 
-export default function ChangeInfoForm({ user }: { user?: UserType }) {
+export default function ChangeInfoForm({ user }: { user?: AuthUser }) {
   const [errorMessage, dispatch] = useFormState(updateInfo, undefined)
   const [imagePending, startTransition] = useTransition();
   const [image, setImage] = useState<string | undefined>(user?.photo)
@@ -71,7 +71,7 @@ export default function ChangeInfoForm({ user }: { user?: UserType }) {
               ) : (
                 <input 
                   type={type(attribute)} 
-                  defaultValue={attribute === 'password' ? '' : user?.[attribute as keyof UserType] as string || ''} 
+                  defaultValue={attribute === 'password' ? '' : user?.[attribute as keyof AuthUser] as string || ''} 
                   name={attribute} 
                   required={attribute === 'email' ? true : false} 
                   pattern={attribute === 'phone' ? "[0-9]{10}" : undefined} 

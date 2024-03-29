@@ -2,10 +2,10 @@ import React from 'react'
 import Image from 'next/image'
 import { formatNumber } from '@/app/lib/utils'
 import UpdateForm from './update-form'
-import { TweetType, UserType } from '@/app/lib/definitions'
+import { AuthUser, TweetType } from '@/app/lib/definitions'
 import Link from 'next/link'
 
-export default function CardTweet({ tweet, user }: { tweet: TweetType, user: UserType }) {
+export default function CardTweet({ tweet, user }: { tweet: TweetType, user: AuthUser }) {
   return (
     <div className='w-full transition-all bg-primary py-3 px-4 rounded-xl shadow-card'>
       <div className='flex gap-4 items-center'>

@@ -1,9 +1,9 @@
-import { UserType } from '@/app/lib/definitions'
+import { AuthUser } from '@/app/lib/definitions'
 import React from 'react'
 import DropDownMenu from '../drop-down-menu'
 import Nav from '../nav'
 
-export default function Header({ user }: { user: UserType }) {
+export default function Header({ user }: { user: AuthUser }) {
 
   return (
     <header className='flex items-center justify-between p-7 flex-wrap gap-y-5'>

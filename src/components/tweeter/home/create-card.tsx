@@ -1,9 +1,9 @@
 import React from 'react'
 import Image from 'next/image'
 import CreateForm from './create-form'
-import { UserType } from '@/app/lib/definitions'
+import { AuthUser } from '@/app/lib/definitions'
 
-export default function CreateCard({ user }: { user: UserType }) {
+export default function CreateCard({ user }: { user: AuthUser }) {
   return (
     <div className='w-full bg-primary py-3 px-4 rounded-xl shadow-card'>
       <h2 className='font-semibold pb-3 text-xs border-b border-secondary'>

@@ -11,6 +11,8 @@ export interface UserType {
   header: string
 }
 
+export type AuthUser = Omit<UserType, 'header' | 'following' | 'followers'>
+
 export interface ChannelType {
   _id: string,
   name: string

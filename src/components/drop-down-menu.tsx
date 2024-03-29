@@ -2,9 +2,9 @@
 
 import React, { ReactNode, useState } from 'react'
 import Profile from './profile'
-import { UserType } from '@/app/lib/definitions'
+import { AuthUser, UserType } from '@/app/lib/definitions'
 
-export default function DropDownMenu({ user, children, className }: { user: UserType, children: ReactNode, className?: string }) {
+export default function DropDownMenu({ user, children, className }: { user: AuthUser, children: ReactNode, className?: string }) {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
