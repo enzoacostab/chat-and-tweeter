@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import CreateForm from './create-form-'
+import CreateForm from './create-form'
 import { UserType } from '@/app/lib/definitions'
 
 export default function CreateCard({ user }: { user: UserType }) {

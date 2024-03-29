@@ -8,7 +8,7 @@ import React, { useState, useTransition } from 'react'
 import { MdBookmarkBorder, MdFavoriteBorder, MdLoop, MdOutlineModeComment } from 'react-icons/md'
 import CommentForm from './comment-form'
 import { dislikeComment, likeComment } from '@/app/lib/actions/comment'
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 export default function UpdateForm({ tweet, user }: { tweet: TweetType, user: UserType }) {
   const [showComments, setShowComments] = useState(true)
@@ -16,7 +16,6 @@ export default function UpdateForm({ tweet, user }: { tweet: TweetType, user: Us
   const isLikedByUser = tweet.likes?.includes(user._id)
   const isRetweetedByUser = tweet.retweets?.includes(user._id)
   const [pending, startTransition] = useTransition()
-  const { push } = useRouter()
 
   const handleUpdateTweet = (action: string) => {
     startTransition(async () => {
@@ -104,18 +103,27 @@ export default function UpdateForm({ tweet, user }: { tweet: TweetType, user: Us
 
           return (
             <li key={comment._id} className='flex gap-2 mt-3'>
-              <Image 
-                onClick={() => push(`profile/${comment.user._id}/tweets`)} 
-                src={comment.user?.photo || ''} 
-                width={40} 
-                height={40} 
-                className='h-[40px] w-[40px] rounded-lg cursor-pointer bg-background' 
-                alt='Tweet user profile photo' 
-              />
+              <Link href={{
+                pathname: `/tweeter/profile/${tweet.user._id}`,
+                query: { filter: "tweets" }
+              }}>
+                <Image 
+                  src={comment.user?.photo || ''} 
+                  width={40} 
+                  height={40} 
+                  className='h-[40px] w-[40px] rounded-lg cursor-pointer bg-background' 
+                  alt='Tweet user profile photo' 
+                />
+              </Link>
               <div className='w-full'>
                 <div className='bg-background2 rounded-lg p-3'>
                   <p className='font-medium text-sm'>
-                    <span className='cursor-pointer' onClick={() => push(`profile/${comment.user?._id}/tweets`)}>{comment.user?.name}</span>
+                    <Link href={{
+                      pathname: `/tweeter/profile/${tweet.user._id}`,
+                      query: { filter: "tweets" }
+                    }}>
+                      <span className='cursor-pointer'>{comment.user?.name}</span>
+                    </Link>
                     <span className='text-placeholder ml-3 text-xs'>{comment.createdAt?.toDateString()}</span>
                   </p>
                   <p className='text-text mt-1'>

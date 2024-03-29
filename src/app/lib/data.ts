@@ -143,4 +143,48 @@ export const getUserReplies = async (userId: string) => {
   }
 }
 
+export const getUserMedia = async (userId: string) => {
+  noStore()
+  
+  try {
+    await connectDb()
+    const data = await Tweet.find({ media: { $ne: undefined }})
+      .populate('user', 'name photo _id')
+      .populate({ 
+        path: 'comments',
+        model: 'Comment',
+        populate: {
+          path: 'user',
+          select: 'name photo _id'
+        },
+      })
+    const tweets = data.map((tweet: any) => tweet.toJSON())
+    return tweets as TweetType[]
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getUserLikes = async (userId: string) => {
+  noStore()
+  
+  try {
+    await connectDb()
+    const data = await Tweet.find({ likes: userId })
+      .populate('user', 'name photo _id')
+      .populate({ 
+        path: 'comments',
+        model: 'Comment',
+        populate: {
+          path: 'user',
+          select: 'name photo _id'
+        },
+      })
+    const tweets = data.map((tweet: any) => tweet.toJSON())
+    return tweets as TweetType[]
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const attributes = ['photo', 'name', 'bio', 'phone', 'email']

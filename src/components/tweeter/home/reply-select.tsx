@@ -12,7 +12,7 @@ export default function ReplySelect() {
 
   return (
     <div className='relative flex flex-col text-xs items-center justify-center'>
-      <button type='button' onClick={() => setMenuOpen(prev => !prev)} className='ml-3 flex gap-2 text-[#2F80ED] items-center'>
+      <button type='button' onClick={() => setMenuOpen(prev => !prev)} className='ml-3 flex gap-2 text-[#2F80ED] hover:opacity-95 transition-opacity items-center'>
         <MdPublic size={20}/>
         {canReply} can reply
       </button>

@@ -1,41 +1,51 @@
 'use client'
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React from 'react'
 
 export default function Nav({
-  page1,
-  page2,
-  page3,
-  page4
+  filter1,
+  filter2,
+  filter3,
+  filter4
 }: {
-  page1: string,
-  page2: string,
-  page3: string,
-  page4: string
+  filter1: string,
+  filter2: string,
+  filter3: string,
+  filter4: string
 }) {
-  const p2 = page2.split(' & ').join('-')
-  const pathname = usePathname()
+  const f2 = filter2.split(' & ').join('-')
+  const pathname = usePathname().split('/').at(-1)
+  const path = pathname
+  const searchParams = useSearchParams()
+  const { push } = useRouter()
+
   const style = (string: string) => {
-    if (pathname.endsWith(string)) {
-      return 'border-l-2 border-[#2F80ED] text-[#2F80ED]'
+    if (searchParams.get('filter') === string) {
+      return 'border-l-[#2F80ED] text-[#2F80ED]'
     }
   }
 
+  const handleClick = (filter: string) => {
+    const params = new URLSearchParams(searchParams)
+    params.set('filter', filter)
+    push(`${pathname}?${params.toString()}`)
+  }
+
   return (
-    <ul className='bg-primary capitalize text-[#828282] h-fit w-full md:max-w-[300px] py-2 *:rounded-sm rounded-lg *:pl-4 *:py-1 *:my-2 text-sm font-semibold'>
-      <li className={style(page1)}>
-        <Link href={page1}>{page1}</Link>
+    <ul className='bg-primary capitalize text-[#828282] h-fit w-full md:max-w-[300px] py-2 *:transition-colors
+     *:border-l-2 *:border-l-transparent *:rounded-sm rounded-lg *:pl-4 *:py-1 *:my-2 text-sm font-semibold'>
+      <li className={style(filter1)}>
+        <button onClick={() => handleClick(filter1)}>{filter1}</button>
       </li>
-      <li className={style(p2)}>
-        <Link href={p2}>{page2}</Link>
+      <li className={style(f2)}>
+        <button onClick={() => handleClick(f2)}>{filter2}</button>
       </li>
-      <li className={style(page3)}>
-        <Link href={page3}>{page3}</Link>
+      <li className={style(filter3)}>
+        <button onClick={() => handleClick(filter3)}>{filter3}</button>
       </li>
-      <li className={style(page4)}>
-        <Link href={page4}>{page4}</Link>
+      <li className={style(filter4)}>
+        <button onClick={() => handleClick(filter4)}>{filter4}</button>
       </li>
     </ul>
   )

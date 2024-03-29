@@ -19,7 +19,7 @@ export default async function Layout({
       <Image src={user.header} width={1920} height={300} alt='header image' className='w-full h-[300px] bg-placeholder object-cover'/>
       <UserCard user={user}/>
       <div className='flex w-full flex-col py-10 md:px-10 px-5 gap-5 md:flex-row justify-center'>
-        <Nav page1='tweets' page2='tweets & replies' page3='media' page4='likes' />
+        <Nav filter1='tweets' filter2='tweets & replies' filter3='media' filter4='likes' />
         {children}
       </div>
     </div>

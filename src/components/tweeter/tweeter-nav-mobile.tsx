@@ -23,7 +23,7 @@ export default function TweeterNavMobile() {
           </Link>
         </li>
         <li className={style('explore')}>
-          <Link href={'/tweeter/explore/top'}>
+          <Link href={'/tweeter/explore'}>
             <MdExplore size={24}/>
           </Link>
         </li>

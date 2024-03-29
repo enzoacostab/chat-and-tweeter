@@ -24,7 +24,7 @@ export default function TweeterNav() {
           </Link>
         </li>
         <li className={style('explore')}>
-          <Link href={'/tweeter/explore/top'}>
+          <Link href={'/tweeter/explore'}>
           Explore
           </Link>
         </li>

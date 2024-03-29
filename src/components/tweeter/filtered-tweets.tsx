@@ -1,6 +1,6 @@
 import React from 'react'
 import CardTweet from './tweet-card'
-import { getUser, getUserTweets, getUserReplies } from '@/app/lib/data'
+import { getUser, getUserTweets, getUserReplies, getUserMedia, getUserLikes } from '@/app/lib/data'
 import { TweetType } from '@/app/lib/definitions'
 
 export default async function FilteredTweets({ 
@@ -8,16 +8,21 @@ export default async function FilteredTweets({
   filter
 }: { 
   userId: string,
-  filter: string
+  filter?: string
 }) {
   const user = await getUser()
   let tweets
+
   if (filter === "tweets") {
     tweets = await getUserTweets(userId) 
   } else if (filter === "tweets-replies") {
     const tweetsData = await getUserTweets(userId) as TweetType[]
     const repliesData = await getUserReplies(userId) as TweetType[]
     tweets = tweetsData?.concat(repliesData)
+  } else if (filter === "media") {
+    tweets = await getUserMedia(userId)
+  } else if (filter === "likes") {
+    tweets = await getUserLikes(userId)
   }
 
   return (
