@@ -1,8 +1,8 @@
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { uploadImage } from '@/app/lib/actions/user'
 import { MdClose, MdOutlineImage } from 'react-icons/md'
-import { useFormState } from 'react-dom'
+import { useFormState, useFormStatus } from 'react-dom'
 import { createComment } from '@/app/lib/actions/comment'
 import { toast } from 'sonner'
 
@@ -18,6 +18,7 @@ export default function CommentForm({
   tweetId: string
 }) {
   const [image, setImage] = useState<string>()
+  const [showReplyButton, setShowReplyButton] = useState<boolean>(false)
   const [text, setText] = useState<string>('')
   const [errorMessage, dispatch] = useFormState(createComment, undefined)
 
@@ -37,16 +38,16 @@ export default function CommentForm({
   const handleSubmit = () => {
     setText('')
     setImage(undefined)
-  }
-
-  if (errorMessage) {
-    toast.error(errorMessage)
+    
+    if (errorMessage) {
+      toast.error(errorMessage)
+    }
   }
 
   return (
     <form onSubmit={handleSubmit} action={dispatch} className='flex gap-2 mt-2'>
-      <div className='w-full bg-background border border-secondary rounded-lg flex flex-col justify-between px-3 py-2 gap-4'>
-        <div className='flex w-full items-center'>
+      <div className='w-full bg-background2 border border-secondary rounded-lg flex flex-col justify-between px-3 py-2 gap-4'>
+        <div onFocus={() => setShowReplyButton(true)} onBlur={() => setShowReplyButton(false)} className='flex w-full items-center'>
           <input 
             value={text}
             onChange={({ target }) => setText(target.value)}
@@ -66,6 +67,7 @@ export default function CommentForm({
               accept='image/*'
             />
           </label> 
+          <SubmitButton showReplyButton={showReplyButton}/>
         </div>
         {image && (
           <div className='relative'>
@@ -80,5 +82,15 @@ export default function CommentForm({
       <input type='hidden' value={userId} name="user" />
       <input type='hidden' value={tweetId} name="tweetId" />
     </form>
+  )
+}
+
+function SubmitButton({ showReplyButton }: { showReplyButton: boolean }) {
+  const { pending } = useFormStatus()
+
+  return (
+    <button disabled={pending} type='submit' className={`${!showReplyButton ? '-ml-14 invisible opacity-0' : 'ml-2'} bg-[#2F80ED] px-3 py-1 transition-all disabled:opacity-80 hover:opacity-90 text-white rounded-md font-medium text-xs`}>
+      Reply
+    </button>
   )
 }

@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import Tweet from "./tweet";
 
 const trendSchema = new Schema({
   name: {
@@ -6,15 +7,16 @@ const trendSchema = new Schema({
     required: true,
     unique: true
   },
-  tweetsCount: {
-    type: Number,
-    default: 1
-  }
+  tweets: [{
+    type: Schema.Types.ObjectId,
+    ref: Tweet
+  }]
 }, { 
   versionKey: false,
   toJSON: {
     transform: function (doc, ret) {
       ret._id = ret._id.toString()
+      ret.tweets = ret.tweets?.map((e: Schema.Types.ObjectId) => e.toString())
     }
   }
 })

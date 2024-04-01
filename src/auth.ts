@@ -18,7 +18,7 @@ const getUser = async (userEmail: string): Promise<AuthUser | null> => {
     
     if (!user) return null
 
-    const { name, email, password, phone, photo, bio, _id } = user._doc
+    const { name, email, password, phone, photo, header, bio, _id } = user._doc
     const obj: AuthUser = { 
       _id: _id.toString(),
       name: name ?? '',
@@ -26,7 +26,8 @@ const getUser = async (userEmail: string): Promise<AuthUser | null> => {
       password, 
       bio: bio ?? '',
       phone: phone ?? '',
-      photo: photo ?? ''
+      photo: photo ?? '',
+      header: header ?? ''
     }
 
     return obj

@@ -1,11 +1,12 @@
 import { auth } from "@/auth"
-import { AuthUser, ChannelType, TweetType, UserType } from "./definitions"
+import { AuthUser, ChannelType, TrendType, TweetType, UserType } from "./definitions"
 import Channel from "@/models/channel"
 import { unstable_noStore as noStore } from "next/cache"
 import { connectDb } from "./db"
 import Tweet from "@/models/tweet"
 import User from "@/models/user"
 import Comment from "@/models/comment"
+import Trend from "@/models/trend"
 
 export const getUser = async () => {
   const session = await auth()
@@ -14,13 +15,37 @@ export const getUser = async () => {
 }
 
 export const getUserById = async (id: string) => {
-  const data = await User.findById(id)
-  const user = data.toJSON()
-  return user as UserType
+  noStore()
+
+  try {
+    await connectDb()
+    const data = await User.findById(id)
+    const user = data.toJSON()
+    return user as UserType
+  } catch (error) {    
+    console.error('Failed to fetch user:', error);
+  }
+}
+
+export const getUserSuggestions = async (id: string, limit: number) => {
+  noStore()
+  
+  try {
+    await connectDb()
+    const data = await User.find({ 
+      _id: { $ne: id },
+      followers: { $ne: id }
+    }).limit(limit)
+    const userSuggestions = data.map((user: any) => user.toJSON())
+    return userSuggestions as UserType[]
+  } catch (error) {    
+    console.error('Failed to fetch user:', error);
+  }
 }
 
 export const getChannels = async () => {
   noStore()
+
   try {
     await connectDb()
     const data = await Channel.find({}).select('name _id')
@@ -89,9 +114,44 @@ export const getTweets = async (ids: string[] | undefined) => {
           path: 'user',
           select: 'name photo'
         },
-      })
+      }).sort({ createdAt: -1 })
     const tweets = data.map((tweet: any) => tweet.toJSON())
     return tweets as TweetType[]
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getTopTweets = async () => {
+  noStore()
+  
+  try {
+    await connectDb()
+    const data = await Tweet.find({})
+      .populate('user', 'name photo _id')
+      .populate({ 
+        path: 'comments',
+        model: 'Comment',
+        populate: {
+          path: 'user',
+          select: 'name photo'
+        },
+      }).sort({ likes: -1 })  
+    const tweets = data.map((tweet: any) => tweet.toJSON())
+    return tweets as TweetType[]
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getTrends = async () => {
+  noStore()
+  
+  try {
+    await connectDb()
+    const data = await Trend.find({})
+    const trends = data.map((trend: any) => trend.toJSON())
+    return trends as TrendType[]
   } catch (error) {
     console.log(error);
   }
@@ -187,4 +247,4 @@ export const getUserLikes = async (userId: string) => {
   }
 }
 
-export const attributes = ['photo', 'name', 'bio', 'phone', 'email']
+export const attributes = ['photo', 'name', 'bio', 'phone', 'email', 'header']

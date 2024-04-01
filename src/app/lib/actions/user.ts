@@ -42,7 +42,8 @@ const UserSchema = z.object({
   bio: z.string().optional(),
   phone: z.string().length(10).optional(),
   email: z.string().email('Invalid Email'),
-  password: z.string().min(6).optional()
+  password: z.string().min(6).optional(),
+  header: z.string().optional()
 })
 
 export const updateInfo = async (prevState: string | undefined, formData: FormData) => {
@@ -124,7 +125,7 @@ export const createUser = async (prevState: string | undefined, formData: FormDa
   redirect('/login')
 }
 
-export const follow = async (userId: string, userIdToFollow: string) => {
+export const follow = async (userId: string, userIdToFollow: string | undefined) => {
   await connectDb()
 
   try {
@@ -141,7 +142,7 @@ export const follow = async (userId: string, userIdToFollow: string) => {
   revalidatePath('/tweeter')
 }
 
-export const unfollow = async (userId: string, userIdToFollow: string) => {
+export const unfollow = async (userId: string, userIdToFollow: string | undefined) => {
   await connectDb()
 
   try {

@@ -18,7 +18,7 @@ export default function PersonalInfo({ user }: { user?: AuthUser }) {
           <EditButton/>
         </div>
         <ul>
-          {attributes.map((attribute: string) => 
+          {attributes.filter(e => e != 'header').map((attribute: string) => 
             <li key={attribute} className={`py-9 flex px-7 justify-between lg:justify-start items-center ${attributes.at(-1) !== attribute ? 'border-b border-b-secondary' : ''}`}>
               <h3 className='uppercase text-[#BDBDBD] w-[30%] min-w-[100px] text-sm font-medium'>{attribute}</h3>
               {attribute === 'photo' 

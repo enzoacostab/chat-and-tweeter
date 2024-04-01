@@ -3,7 +3,7 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React from 'react'
 
-export default function Nav({
+export default function FilterSelect({
   filter1,
   filter2,
   filter3,
@@ -22,6 +22,8 @@ export default function Nav({
   const style = (string: string) => {
     if (searchParams.get('filter') === string) {
       return 'border-l-[#2F80ED] text-[#2F80ED]'
+    } else {
+      return 'border-l-transparent text-[#828282]'
     }
   }
 
@@ -32,8 +34,8 @@ export default function Nav({
   }
 
   return (
-    <ul className='bg-primary capitalize text-[#828282] h-fit w-full md:max-w-[300px] py-2 *:transition-colors
-     *:border-l-2 *:border-l-transparent *:rounded-sm rounded-lg *:pl-4 *:py-1 *:my-2 text-sm font-semibold'>
+    <ul className='bg-primary h-fit w-full md:max-w-[300px] py-2 *:transition-colors
+     *:border-l-2 *:rounded-sm rounded-lg *:pl-4 *:py-1 *:my-2 text-sm font-semibold *:[&>*]:capitalize'>
       <li className={style(filter1)}>
         <button onClick={() => handleClick(filter1)}>{filter1}</button>
       </li>

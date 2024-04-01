@@ -39,6 +39,7 @@ body {
   width: 100%;
   height: 1px;
   padding: 0px;
+  background-color: rgb(var(--secondary));
 }
 
 input:-webkit-autofill,
@@ -54,9 +55,9 @@ input:-webkit-autofill:active {
 }
 
 body {
-  --sb-track-color: rgb(var(--primary));
+  --sb-track-color: rgb(var(--background2-rgb));
   --sb-thumb-color: rgb(var(--text));
-  --sb-size: 7px;
+  --sb-size: 5px;
 }
 
 body::-webkit-scrollbar {

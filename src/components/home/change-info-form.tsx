@@ -15,7 +15,8 @@ import { MdPhotoCamera } from 'react-icons/md'
 export default function ChangeInfoForm({ user }: { user?: AuthUser }) {
   const [errorMessage, dispatch] = useFormState(updateInfo, undefined)
   const [imagePending, startTransition] = useTransition();
-  const [image, setImage] = useState<string | undefined>(user?.photo)
+  const [photo, setPhoto] = useState<string | undefined>(user?.photo)
+  const [header, setHeader] = useState<string | undefined>(user?.header)
 
   useEffect(() => {
     if (errorMessage) {
@@ -25,6 +26,8 @@ export default function ChangeInfoForm({ user }: { user?: AuthUser }) {
 
   const handleChange = ({ target }: {target: HTMLInputElement}) => {
     const file = target?.files?.[0]
+    const { id } = target
+
     if (!file) return;
 
     let form = new FormData();
@@ -32,14 +35,18 @@ export default function ChangeInfoForm({ user }: { user?: AuthUser }) {
     
     startTransition(async () => {
       const newImage = await uploadImage(form)
-      setImage(newImage)
+      if (id === 'header') {
+        setHeader(newImage)
+      } else {
+        setPhoto(newImage)
+      }
     })
   };
 
 
   return (
     <form className='max-w-[420px]' action={dispatch}>
-      {attributes.map((attribute: string) => 
+      {attributes.map((attribute: string) =>
         <div key={attribute} className='mt-7'>
           {attribute === 'photo' ? (
             <div className='flex items-center gap-7'>
@@ -50,12 +57,12 @@ export default function ChangeInfoForm({ user }: { user?: AuthUser }) {
                   ) : (
                     <MdPhotoCamera size={24} />
                   )}
-                  <input disabled={imagePending} onChange={handleChange} type="file" className='hidden' accept='image/*'/>
-                  <input type="hidden" name='photo' value={image || user?.photo}/>
+                  <input disabled={imagePending} onChange={handleChange} type="file" id='photo' className='hidden' accept='image/*'/>
+                  <input type="hidden" name='photo' value={photo}/>
                 </label>
-                <Image src={image || ''} width={72} height={72} className='rounded-lg' alt="Profile"/>
+                <Image src={photo ?? ''} width={72} height={72} className='rounded-lg object-cover' alt='profile photo'/>
               </div>
-              <span className='text-[#828282] text-sm font-medium'>CHANGE PHOTO</span>
+              <span className='text-[#828282] text-sm font-medium uppercase'>change {attribute}</span>
             </div>
           ) : (
             <label className='text-sm capitalize'>
@@ -68,6 +75,19 @@ export default function ChangeInfoForm({ user }: { user?: AuthUser }) {
                   rows={4} 
                   placeholder='Enter your bio...'
                 />
+              ) : attribute === "header" ? (
+                <div className='relative h-full mt-1'>
+                  <label className='bg-[#00000033] cursor-pointer flex items-center justify-center rounded-lg absolute size-full'>
+                    {imagePending ? (
+                      <LuLoader2 size={24} className='animate-spin'/>
+                    ) : (
+                      <MdPhotoCamera size={24} />
+                    )}
+                    <input disabled={imagePending} onChange={handleChange} type="file" id='header' className='hidden' accept='image/*'/>
+                    <input type="hidden" name='header' value={header}/>
+                  </label>
+                  <Image src={header ?? ''} width={1000} height={100} className='rounded-lg object-cover w-full h-[100px]' alt='header image'/>
+                </div>
               ) : (
                 <input 
                   type={type(attribute)} 

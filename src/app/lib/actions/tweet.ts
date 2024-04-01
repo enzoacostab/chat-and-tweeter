@@ -4,6 +4,7 @@ import { z } from "zod";
 import { connectDb } from "../db";
 import { revalidatePath } from "next/cache";
 import Tweet from "@/models/tweet";
+import Trend from "@/models/trend";
 
 const CreateTweet = z.object({
   text: z.string().max(100),
@@ -23,7 +24,18 @@ export const createTweet = async (prevState: string | undefined, formData: FormD
   const { data } = validatedFields
   
   try {
-    await Tweet.create(data)
+    const hashtag = data.text.split(' ').find(e => e.startsWith('#'))
+    const tweet = await Tweet.create(data)
+
+    if (hashtag && hashtag.length > 1) {
+      await Trend.findOneAndUpdate({ 
+        name: hashtag 
+      }, { 
+        $push: { tweets: tweet._id } 
+      }, { 
+        upsert: true
+      })
+    }
   } catch (error: any) {
     return `Database error: ${error.message}`
   }

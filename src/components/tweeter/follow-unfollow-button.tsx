@@ -1,36 +1,40 @@
 'use client'
 
 import { follow, unfollow } from '@/app/lib/actions/user'
+import { UserType } from '@/app/lib/definitions'
 import React, { useTransition } from 'react'
 import { MdPersonAdd, MdPersonRemove } from 'react-icons/md'
 
 export default function FollowUnfollowButton({ 
-  followedByUser,
-  userIdToFollow,
-  userId
+  userToFollow,
+  loggedUserId
 }: { 
-  followedByUser: boolean, 
-  userIdToFollow: string,
-  userId: string
+  userToFollow?: UserType,
+  loggedUserId: string
 }) {
   const [pending, startTransition] = useTransition()
+  const followedByUser = userToFollow?.followers?.includes(loggedUserId as any)
+  const myProfile = loggedUserId === userToFollow?._id
 
   const handleClick = (action: string) => {
     startTransition(async () => {
       if (action === "unfollow") {
-        unfollow(userId, userIdToFollow)
+        unfollow(loggedUserId, userToFollow?._id)
       } else {
-        follow(userId, userIdToFollow)
+        follow(loggedUserId, userToFollow?._id)
       }
     })
   }
+
+  if (myProfile) return null
 
   if (followedByUser) {
     return (
       <button 
         disabled={pending} 
         onClick={() => handleClick('unfollow')} 
-        className='text-xs disabled:opacity-80 hover:opacity-90 h-fit md:ml-auto font-medium px-5 py-2 flex gap-1 bg-[#2F80ED] items-center text-white rounded-md'
+        className='text-xs disabled:opacity-80 hover:opacity-90 h-fit md:ml-auto font-medium px-3
+        py-1.5 flex gap-1 bg-[#2F80ED] items-center text-white rounded-md'
       >
         <MdPersonRemove size={14}/>
         Unfollow
@@ -41,7 +45,8 @@ export default function FollowUnfollowButton({
       <button 
         disabled={pending} 
         onClick={() => handleClick('follow')} 
-        className='text-xs disabled:opacity-80 hover:opacity-90 h-fit md:ml-auto font-medium px-5 py-2 flex gap-1 bg-[#2F80ED] items-center text-white rounded-md'
+        className='text-xs disabled:opacity-80 hover:opacity-90 h-fit md:ml-auto font-medium px-3 
+        py-1.5 flex gap-1 bg-[#2F80ED] items-center text-white rounded-md'
       >
         <MdPersonAdd size={14}/>
         Follow
