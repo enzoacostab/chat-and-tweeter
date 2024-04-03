@@ -6,7 +6,7 @@ import React, { ReactNode } from 'react'
 
 export default async function Layout({ 
   children, 
-  params 
+  params, 
 }: { 
   children: ReactNode ,
   params: { id: string }

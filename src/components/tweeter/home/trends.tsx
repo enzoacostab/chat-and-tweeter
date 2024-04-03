@@ -10,16 +10,20 @@ export default async function Trends() {
       <h2 className='font-semibold pb-3 text-xs border-b border-secondary'>
         Trends for you
       </h2>
-      <ul>
-        {trends?.map(trend => (
-          <li className='font-semibold mt-3' key={trend.name}>
-            {trend.name}
-            <span className='text-xs font-medium block text-[#828282]'>
-              {formatNumber(trend.tweets.length)} Tweets
-            </span>
-          </li>
-        ))}
-      </ul>
+      {trends && trends.length > 0 ? (
+        <ul>
+          {trends.map(trend => (
+            <li className='font-semibold mt-3' key={trend.name}>
+              {trend.name}
+              <span className='text-xs font-medium block text-[#828282]'>
+                {formatNumber(trend.tweets.length)} Tweets
+              </span>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className='text-center text-xs text-placeholder mt-2'>No trends yet</p>
+      )}
     </div>
   )
 }

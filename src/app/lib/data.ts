@@ -20,6 +20,22 @@ export const getUserById = async (id: string) => {
   try {
     await connectDb()
     const data = await User.findById(id)
+      .populate({
+        path: 'following', 
+        select: 'name photo bio followers',
+        populate: {
+          path: 'followers',
+          select: '_id'
+        }
+      })
+      .populate({
+        path: 'followers', 
+        select: 'name photo bio followers',
+        populate: {
+          path: 'followers',
+          select: '_id'
+        }
+      })
     const user = data.toJSON()
     return user as UserType
   } catch (error) {    

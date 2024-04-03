@@ -61,7 +61,7 @@ export default function UpdateForm({ tweet, user }: { tweet: TweetType, user: Au
     <>
       <div className='*:flex text-text hover:*:bg-background *:transition-colors *:px-5 *:rounded-lg *:h-full *:gap-2 *:items-center py-1 
         *:py-3 border-y mt-1 border-y-background text-sm font-medium flex justify-around items-center disabled:*:bg-transparent'>
-        <button className={withoutComments ? 'opacity-50' : ''} onClick={() => setShowComments(prev => !prev)}>
+        <button className={withoutComments ? 'opacity-40' : ''} onClick={() => setShowComments(prev => !prev)}>
           {showComments 
             ? <MdModeComment size={20}/>
             : <MdOutlineModeComment size={20}/>}
@@ -101,7 +101,9 @@ export default function UpdateForm({ tweet, user }: { tweet: TweetType, user: Au
       />
       <CommentForm userId={user?._id} tweetId={tweet._id} pending={pending} startTransition={startTransition}/>
       {withoutComments ? (
-        <p className={`transition-all ${!showComments ? 'relative h-0 overflow-hidden opacity-0' : 'mt-5 mb-3 text-center text-placeholder'}`}>without comments</p>
+        <p className={`transition-all text-center text-placeholder text-xs ${!showComments ? 'relative h-0 overflow-hidden opacity-0' : 'mt-5 mb-3'}`}>
+          Without comments
+        </p>
       ) : (
         <ul className={`transition-all ${!showComments ? 'relative h-0 overflow-hidden opacity-0' : 'mt-2 pt-3 border-t border-y-background'}`}>
           {tweet.comments?.map((comment: CommentType) => {

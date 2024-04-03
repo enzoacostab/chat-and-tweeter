@@ -4,6 +4,7 @@ import { formatNumber } from '@/app/lib/utils'
 import Image from 'next/image'
 import React from 'react'
 import FollowUnfollowButton from '../follow-unfollow-button'
+import Buttons from './buttons'
 
 export default async function UserProfileCard({ user }: { user?: UserType }) {
   const loggedUser = await getUser()
@@ -16,14 +17,7 @@ export default async function UserProfileCard({ user }: { user?: UserType }) {
       <div className='flex gap-y-5 flex-col md:w-[60%] w-full'>
         <div className='text-xs flex flex-wrap md:justify-start justify-center md:flex-nowrap items-center gap-y-3 gap-x-7'>
           <h1 className='font-semibold w-full md:w-fit text-2xl text-center'>{user?.name}</h1>
-          <p className='font-medium text-text'>
-            <span className='font-semibold mr-1 text-foreground'>{formatNumber(user?.following.length)}</span>
-            Following 
-          </p>
-          <p className='font-medium text-text'>
-            <span className='font-semibold mr-1 text-foreground'>{formatNumber(user?.followers.length)}</span>
-            Followers 
-          </p>
+          <Buttons user={user} userId={loggedUser._id}/>
         </div>
         <p className='text-text text-center md:text-left text-lg font-medium'>{user?.bio}</p>
       </div>

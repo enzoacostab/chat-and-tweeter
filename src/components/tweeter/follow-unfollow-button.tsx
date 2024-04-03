@@ -13,7 +13,7 @@ export default function FollowUnfollowButton({
   loggedUserId: string
 }) {
   const [pending, startTransition] = useTransition()
-  const followedByUser = userToFollow?.followers?.includes(loggedUserId as any)
+  const followedByUser = userToFollow?.followers?.find((follower: UserType) => follower._id === loggedUserId)
   const myProfile = loggedUserId === userToFollow?._id
 
   const handleClick = (action: string) => {
@@ -49,7 +49,7 @@ export default function FollowUnfollowButton({
         py-1.5 flex gap-1 bg-[#2F80ED] items-center text-white rounded-md'
       >
         <MdPersonAdd size={14}/>
-        Follow
+        <span className='md:hidden lg:block'>Follow</span>
       </button>
     )
   }

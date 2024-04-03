@@ -20,9 +20,13 @@ export default function SendMessageForm({ channelId }: { channelId?: string }) {
     setContent('')
   }
 
+  if (!channelId) {
+    return null
+  }
+
   return (
     <form onSubmit={handleSubmit} action={dispatch} className='mt-auto'>
-      <label className='bg-secondary p-1 pl-4 gap-4 flex items-center justify-between rounded-xl'>
+      <label className='bg-background2 border border-secondary p-1 pl-4 gap-4 flex items-center justify-between rounded-xl'>
         <input 
           value={content}
           onChange={({ target }) => setContent(target.value)}

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useTransition } from 'react'
+import React, { useRef, useState, useTransition } from 'react'
 import { MdClose, MdOutlineImage } from 'react-icons/md'
 import ReplySelect from './reply-select'
 import { useFormState, useFormStatus } from 'react-dom'
@@ -12,6 +12,7 @@ export default function CreateForm({ userId }: { userId: string }) {
   const [text, setText] = useState<string>('')
   const [image, setImage] = useState<string>()
   const [pending, startTransition] = useTransition()
+  const divRef = useRef<HTMLDivElement>(null)
   const [errorMessage, dispatch] = useFormState(createTweet, undefined)
   
   const handleChange = ({ target }: {target: HTMLInputElement}) => {
@@ -28,6 +29,9 @@ export default function CreateForm({ userId }: { userId: string }) {
   };
 
   const handleSubmit = () => {
+    if (divRef.current) {
+      divRef.current.textContent = ''
+    }
     setText('')
     setImage(undefined)
   }
@@ -35,6 +39,7 @@ export default function CreateForm({ userId }: { userId: string }) {
   return (
     <form onSubmit={handleSubmit} action={dispatch} className='h-full w-[90%] relative'>
       <div 
+        ref={divRef}
         onInput={({currentTarget}) => setText(currentTarget?.textContent ?? '')} 
         contentEditable={true} 
         className={`h-auto w-full ${text ? 'static' : 'absolute'} outline-none mb-4`}
