@@ -46,7 +46,7 @@ export default function CommentForm({
 
   return (
     <form onSubmit={handleSubmit} action={dispatch} className='flex gap-2 mt-2'>
-      <div className='w-full bg-background2 border border-background rounded-lg flex flex-col justify-between px-3 py-2 gap-4'>
+      <div className='w-full bg-background2 has-[:focus]:outline outline-1 outline-secondary border border-background rounded-lg flex flex-col justify-between px-3 py-2 gap-4'>
         <div onFocus={() => setShowReplyButton(true)} onBlur={() => setShowReplyButton(false)} className='flex w-full items-center'>
           <input 
             value={text}
@@ -89,7 +89,8 @@ function SubmitButton({ showReplyButton }: { showReplyButton: boolean }) {
   const { pending } = useFormStatus()
 
   return (
-    <button disabled={pending} type='submit' className={`${!showReplyButton ? '-ml-12 invisible opacity-0' : 'ml-2'} bg-secondary hover:text-text hover:bg-placeholder px-2 py-1 transition-all disabled:opacity-80 text-placeholder rounded-md font-medium text-xs`}>
+    <button disabled={pending} type='submit' className={`${!showReplyButton ? '-ml-12 invisible opacity-0' : 'ml-2'} bg-secondary 
+    hover:text-text hover:bg-placeholder px-2 py-1 transition-all disabled:opacity-80 text-placeholder rounded-md font-medium text-xs`}>
       Reply
     </button>
   )

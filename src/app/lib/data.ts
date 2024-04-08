@@ -130,7 +130,9 @@ export const getTweets = async (ids: string[] | undefined) => {
           path: 'user',
           select: 'name photo'
         },
-      }).sort({ createdAt: -1 })
+      })
+      .sort({ createdAt: -1 })
+      .limit(20)
     const tweets = data.map((tweet: any) => tweet.toJSON())
     return tweets as TweetType[]
   } catch (error) {
@@ -152,7 +154,9 @@ export const getTopTweets = async () => {
           path: 'user',
           select: 'name photo'
         },
-      }).sort({ likes: -1 })  
+      })
+      .sort({ likes: -1 })
+      .limit(20)
     const tweets = data.map((tweet: any) => tweet.toJSON())
     return tweets as TweetType[]
   } catch (error) {
@@ -165,7 +169,7 @@ export const getTrends = async () => {
   
   try {
     await connectDb()
-    const data = await Trend.find({})
+    const data = await Trend.find({}).limit(10)
     const trends = data.map((trend: any) => trend.toJSON())
     return trends as TrendType[]
   } catch (error) {
@@ -188,6 +192,7 @@ export const getUserTweets = async (userId: string) => {
           select: 'name photo'
         },
       })
+      .limit(20)
     const tweets = data.map((tweet: any) => tweet.toJSON())
     return tweets as TweetType[]
   } catch (error) {
@@ -212,6 +217,7 @@ export const getUserReplies = async (userId: string) => {
           select: 'name photo _id'
         },
       })
+      .limit(20)
     const tweets = data.map((tweet: any) => tweet.toJSON())
     return tweets as TweetType[]
   } catch (error) {
@@ -234,6 +240,7 @@ export const getUserMedia = async (userId: string) => {
           select: 'name photo _id'
         },
       })
+      .limit(20)
     const tweets = data.map((tweet: any) => tweet.toJSON())
     return tweets as TweetType[]
   } catch (error) {
@@ -256,6 +263,7 @@ export const getUserLikes = async (userId: string) => {
           select: 'name photo _id'
         },
       })
+      .limit(20)
     const tweets = data.map((tweet: any) => tweet.toJSON())
     return tweets as TweetType[]
   } catch (error) {

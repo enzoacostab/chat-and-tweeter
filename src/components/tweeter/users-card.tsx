@@ -4,6 +4,7 @@ import Image from 'next/image'
 import React, { RefObject } from 'react'
 import FollowUnfollowButton from './follow-unfollow-button'
 import { MdClose } from 'react-icons/md'
+import Link from 'next/link'
 
 export default function UsersCard({ 
   userId, 
@@ -33,9 +34,19 @@ export default function UsersCard({
           <li key={user._id} className='font-medium border-t border-secondary py-5'>
             <div className='flex text-xs justify-between gap-3 items-center'>
               <div className='flex gap-3'>
-                <Image src={user?.photo || ''} width={40} height={40} className='h-[40px] w-[40px] rounded-lg bg-background' alt='Suggested user profile photo' />
+                <Link href={{
+                  pathname: `/tweeter/profile/${user._id}`,
+                  query: { filter: "tweets" }
+                }}>
+                  <Image src={user?.photo || ''} width={40} height={40} className='h-[40px] w-[40px] rounded-lg bg-background' alt='Suggested user profile photo' />
+                </Link>
                 <div>
-                  <span className='text-base block text-foreground'>{user.name}</span>
+                  <Link href={{
+                    pathname: `/tweeter/profile/${user._id}`,
+                    query: { filter: "tweets" }
+                  }}>
+                    <span className='text-base block text-foreground'>{user.name}</span>
+                  </Link>
                   <span className='text-text'>{formatNumber(user.followers?.length)} followers</span>
                 </div>
               </div>
@@ -43,7 +54,7 @@ export default function UsersCard({
             </div>
             <p className='text-sm text-text my-4'>{user.bio}</p>
             {user?.header ? (
-              <Image src={user.header} width={1920} height={300} className='h-[100px] w-full rounded-lg bg-background2' alt='user header image' />
+              <Image src={user.header} width={1920} height={100} className='h-[100px] w-full rounded-lg bg-background2 object-cover' alt='user header image' />
             ) : null}
           </li>
         ))}

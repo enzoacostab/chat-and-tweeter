@@ -6,10 +6,12 @@ import UserCard from './user-card'
 
 export default async function FilteredTweets({ 
   userId,
-  filter
+  filter,
+  search
 }: { 
   userId?: string,
-  filter?: string
+  filter?: string,
+  search?: string
 }) {
   const loggedUser = await getUser()
   let tweets = null
@@ -30,6 +32,14 @@ export default async function FilteredTweets({
     tweets = await getTweets(undefined)
   } else if (filter === "people") {
     users = await getUserSuggestions(loggedUser?._id, 10)
+  }
+
+  if (search) {
+    if (users) {
+      users = users.filter(user => user.name?.toLowerCase().includes(search))
+    } else if (tweets) {
+      tweets = tweets.filter(tweet => tweet.text.toLowerCase().includes(search))
+    }
   }
 
   return (
