@@ -1,6 +1,11 @@
 import React, { ReactNode } from 'react'
 import TweeterHeader from '@/components/tweeter/tweeter-header'
 import TweeterNav from '@/components/tweeter/tweeter-nav'
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Tweeter",
+};
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (

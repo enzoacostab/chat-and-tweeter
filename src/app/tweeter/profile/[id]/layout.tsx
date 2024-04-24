@@ -16,7 +16,7 @@ export default async function Layout({
 
   return (
     <div className='flex items-center flex-col'>
-      <Image src={user?.header || ''} width={1920} height={300} alt='header image' className='w-full h-[300px] bg-placeholder object-cover'/>
+      <Image src={user?.header || '/default-header.png'} width={3000} height={1055} alt='header image' className='w-full h-[300px] bg-placeholder'/>
       <UserProfileCard user={user}/>
       <div className='flex w-full flex-col py-10 md:px-10 px-5 gap-5 md:flex-row justify-center'>
         <FilterSelect filter1='tweets' filter2='tweets & replies' filter3='media' filter4='likes' />

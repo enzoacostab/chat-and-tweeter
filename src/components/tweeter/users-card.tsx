@@ -38,7 +38,7 @@ export default function UsersCard({
                   pathname: `/tweeter/profile/${user._id}`,
                   query: { filter: "tweets" }
                 }}>
-                  <Image src={user?.photo || ''} width={40} height={40} className='h-[40px] w-[40px] rounded-lg bg-background' alt='Suggested user profile photo' />
+                  <Image src={user?.photo || '/user-icon.png'} width={100} height={100} className={`h-[40px] w-[40px] rounded-lg bg-background ${!user?.photo ? 'p-1' : ''}`} alt='Suggested user profile photo' />
                 </Link>
                 <div>
                   <Link href={{

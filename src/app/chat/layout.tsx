@@ -3,6 +3,11 @@ import ChatMenu from '@/components/chat/chat-menu';
 import DropDownMenu from '@/components/drop-down-menu';
 import { getUser } from '../lib/data';
 import Nav from '@/components/nav';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Chat Group",
+};
 
 export default async function Layout({ 
   children,

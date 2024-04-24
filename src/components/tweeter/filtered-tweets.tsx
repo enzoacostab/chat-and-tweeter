@@ -1,7 +1,7 @@
 import React from 'react'
 import CardTweet from './tweet-card'
 import { getUser, getUserTweets, getUserReplies, getUserMedia, getUserLikes, getTopTweets, getTweets, getUserSuggestions } from '@/app/lib/data'
-import { TweetType } from '@/app/lib/definitions'
+import { TweetType, UserType } from '@/app/lib/definitions'
 import UserCard from './user-card'
 
 export default async function FilteredTweets({ 
@@ -14,8 +14,8 @@ export default async function FilteredTweets({
   search?: string
 }) {
   const loggedUser = await getUser()
-  let tweets = null
-  let users = null
+  let tweets: TweetType[] | undefined = []
+  let users: UserType[] | undefined = []
   if (filter === "tweets") {
     tweets = await getUserTweets(userId ?? loggedUser._id) 
   } else if (filter === "tweets-replies") {
@@ -49,6 +49,9 @@ export default async function FilteredTweets({
       )}
       {users?.map(user => 
         <UserCard key={user._id} user={user} loggedUserId={loggedUser._id}/>
+      )}
+      {users?.length == 0 && tweets?.length == 0 && (
+        <p className='text-center text-placeholder'>No content</p>
       )}
     </div>
   )
