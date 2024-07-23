@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect } from 'react'
-import { MdHttps, MdMail } from "react-icons/md";
+import { MdHttps, MdMail, MdPeople } from "react-icons/md";
 import { useFormState } from 'react-dom'
 import { authenticate, createUser } from '@/app/lib/actions/user'
 import SubmitButton from './submit-button';
@@ -18,7 +18,7 @@ export default function AuthForm({ isRegister }: { isRegister: boolean }) {
 
   return (
     <form className="w-full" action={dispatch}>
-      <label className="flex items-center gap-2 p-3 border border-[#BDBDBD] rounded-lg">
+      <label className="flex items-center gap-2 p-3 border border-placeholder rounded-lg">
         <MdMail color="#828282" size={24}/>
         <input 
           autoComplete='off' 
@@ -29,7 +29,21 @@ export default function AuthForm({ isRegister }: { isRegister: boolean }) {
           type="email"
         />
       </label>
-      <label className="flex mt-3 items-center gap-2 p-3 border border-[#BDBDBD] rounded-lg">
+      {isRegister ? 
+      <>
+        <label className="flex mt-3 items-center gap-2 p-3 border border-placeholder rounded-lg">
+          <MdPeople color="#828282" size={24}/>
+          <input 
+            autoComplete='off' 
+            name="name" 
+            className="placeholder:text-[#828282] w-full focus-visible:outline-none bg-transparent" 
+            placeholder="Username" 
+            required
+            type="text"
+          />
+        </label>
+      </> : null}
+      <label className="flex mt-3 items-center gap-2 p-3 border border-placeholder rounded-lg">
         <MdHttps color="#828282" size={24}/>
         <input 
           name="password" 

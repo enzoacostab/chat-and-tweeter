@@ -21,8 +21,8 @@ export default function Nav({
     >
       <Link href={{
         pathname: `/tweeter/profile/${userId}`,
-        query: { filter: 'tweets' 
-      }}}>
+        query: { filter: 'tweets' }
+      }}>
         <MdAccountCircle size={20}/> 
         My Profile
       </Link>

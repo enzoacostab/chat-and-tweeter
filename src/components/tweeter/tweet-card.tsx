@@ -13,7 +13,7 @@ export default function CardTweet({ tweet, user }: { tweet: TweetType, user: Aut
           pathname: `/tweeter/profile/${tweet.user._id}`,
           query: { filter: "tweets" }
         }}>
-          <Image src={tweet.user?.photo || ''} width={40} height={40} className='h-[40px] w-[40px] rounded-lg bg-background' alt='Tweet user profile photo' />
+          <Image src={tweet.user?.photo || '/user-icon.png'} width={40} height={40} className={`h-[40px] w-[40px] rounded-lg bg-background ${!tweet.user?.photo ? "p-1" : ""}`} alt='Tweet user profile photo' />
         </Link>
         <div> 
           <Link href={{

@@ -38,7 +38,7 @@ export const authenticate = async (prevState: string | undefined, formData: Form
 
 const UserSchema = z.object({
   photo: z.string().url().optional(),
-  name: z.string().optional(),
+  name: z.string(),
   bio: z.string().optional(),
   phone: z.string().length(10).optional(),
   email: z.string().email('Invalid Email'),
@@ -94,7 +94,7 @@ export const uploadImage = async (formData: FormData) => {
   return response
 }
 
-const CreateUser = UserSchema.pick({ email: true }).extend({ password: z.string().min(6) })
+const CreateUser = UserSchema.pick({ email: true, name: true }).extend({ password: z.string().min(6) })
 
 export const createUser = async (prevState: string | undefined, formData: FormData) => {
   await connectDb()

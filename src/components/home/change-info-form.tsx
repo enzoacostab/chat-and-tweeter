@@ -60,7 +60,7 @@ export default function ChangeInfoForm({ user }: { user?: AuthUser }) {
                   <input disabled={imagePending} onChange={handleChange} type="file" id='photo' className='hidden' accept='image/*'/>
                   <input type="hidden" name='photo' value={photo}/>
                 </label>
-                <Image src={photo ?? ''} width={72} height={72} className='rounded-lg object-cover' alt='profile photo'/>
+                <Image src={photo || '/user-icon.png'} width={72} height={72} className={`rounded-lg object-cover ${!photo ? "p-2" : ""}`} alt='profile photo'/>
               </div>
               <span className='text-[#828282] text-sm font-medium uppercase'>change {attribute}</span>
             </div>
@@ -86,7 +86,7 @@ export default function ChangeInfoForm({ user }: { user?: AuthUser }) {
                     <input disabled={imagePending} onChange={handleChange} type="file" id='header' className='hidden' accept='image/*'/>
                     <input type="hidden" name='header' value={header}/>
                   </label>
-                  <Image src={header ?? ''} width={1000} height={100} className='rounded-lg object-cover w-full h-[100px]' alt='header image'/>
+                  <Image src={header || '/default-header.png'} width={1000} height={100} className='rounded-lg object-cover w-full h-[100px]' alt='header image'/>
                 </div>
               ) : (
                 <input 

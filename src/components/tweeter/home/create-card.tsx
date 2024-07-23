@@ -10,7 +10,7 @@ export default function CreateCard({ user }: { user: AuthUser }) {
         Tweet something
       </h2>
       <div className='flex pt-3 gap-3'>
-        <Image src={user?.photo || ''} width={40} height={40} className='max-h-[40px] rounded-lg' alt='User profile picture' />
+        <Image src={user?.photo || '/user-icon.png'} width={40} height={40} className={`bg-background max-h-[40px] rounded-lg ${!user?.photo ? "p-1" : ""}`} alt='User profile picture' />
         <CreateForm userId={user._id}/>
       </div>
     </div>

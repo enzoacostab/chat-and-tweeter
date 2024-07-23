@@ -1,43 +1,39 @@
 import { signIn } from '@/auth';
 import Image from 'next/image';
-import React from 'react'
+import React, { useTransition } from 'react'
+import LoginProviderForm from './login-provider-form';
 
 export default function LoginProviders() {
-  
   return (
-    <div className="flex disabled:*:bg-background *:h-[42px] justify-between w-full *:transition-colors *:rounded-full hover:*:bg-foreground">
-      <form action={async () => {
-        'use server'
-        await signIn('google')
-      }}>
-        <button>
-          <Image src="/Google.svg" width={42} height={42} alt="google icon"></Image>
-        </button>
-      </form>
-      <form action={async () => {
-        'use server'
-        await signIn('facebook')
-      }}>
-        <button>
-          <Image src="/Facebook.svg" width={42} height={42} alt="facebook icon"></Image>
-        </button>
-      </form>
-      <form action={async () => {
-        'use server'
-        await signIn('twitter')
-      }}>
-        <button>
-          <Image src="/Twitter.svg" width={42} height={42} alt="twitter icon"></Image>
-        </button>
-      </form>
-      <form action={async () => {
-        'use server'
-        await signIn('github')
-      }}>
-        <button>
-          <Image src="/Github.svg" width={42} height={42} alt="github icon"></Image>
-        </button>
-      </form>
+    <div className="flex *:size-[43px] justify-between w-full *:transition-colors *:rounded-full hover:*:bg-secondary">
+      <LoginProviderForm 
+        provider="google" 
+        func={async () => {
+          'use server'
+          await signIn("google")
+        }}
+      />
+      <LoginProviderForm 
+        provider="facebook" 
+        func={async () => {
+          'use server'
+          await signIn("facebook")
+        }}
+      />
+      <LoginProviderForm 
+        provider="twitter" 
+        func={async () => {
+          'use server'
+          await signIn("twitter")
+        }}
+      />
+      <LoginProviderForm 
+        provider="github" 
+        func={async () => {
+          'use server'
+          await signIn("github")
+        }}
+      />
     </div>
   )
 }

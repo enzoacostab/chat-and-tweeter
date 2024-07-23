@@ -93,10 +93,10 @@ export default function UpdateForm({ tweet, user }: { tweet: TweetType, user: Au
         </button>
       </div>
       <Image 
-        src={user?.photo || ''} 
+        src={user?.photo || '/user-icon.png'} 
         width={40} 
         height={40} 
-        className='h-[40px] w-[40px] float-left mr-3 mt-2 rounded-lg bg-background' 
+        className={`h-[40px] w-[40px] float-left mr-3 mt-2 rounded-lg bg-background ${!user?.photo ? "p-1" : ""}`}
         alt='Tweet user profile photo' 
       />
       <CommentForm userId={user?._id} tweetId={tweet._id} pending={pending} startTransition={startTransition}/>

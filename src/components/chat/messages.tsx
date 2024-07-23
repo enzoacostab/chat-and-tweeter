@@ -38,18 +38,20 @@ export default function Messages({ channel, channelId }: { channel?: ChannelType
   return (
     <ul className='overflow-y-scroll no-scrollbar mb-4 sm:mb-8'>
       {messages?.map((message: MessageType, i: number) => {
-        const date = new Date(message?.createdAt)
-        const prevDate = new Date(messages[i-1]?.createdAt)
+        const date = message?.createdAt
+        const prevDate = messages[i-1]?.createdAt
+        date.setHours(0,0,0,0)
+        prevDate?.setHours(0,0,0,0)
         
         return (
           <li key={message._id}>
-            {date.getDate() > prevDate.getDate() ? (
+            {date.getTime() > prevDate?.getTime() ? (
               <div className='h-[1px] bg-[#828282] my-10 flex items-center justify-center'>
                 <span className='bg-[#252329] text-[#828282] text-xs font-semibold px-5'>{date.toDateString()}</span>
               </div> 
             ) : null}
             <div className='flex mt-10'>
-              <Image src={message.user?.photo || ''} className='rounded-lg max-h-[42px]' width={42} height={42} alt="profile image" />
+              <Image src={message.user?.photo || '/user-icon.png'} className={`bg-secondary rounded-lg max-h-[42px] ${!message.user?.photo ? "p-1" : ""}`} width={42} height={42} alt="profile image" />
               <div className='text-lg font-medium ml-5'>
                 <p className='text-[#828282] font-bold capitalize'>
                   {message.user?.name} 

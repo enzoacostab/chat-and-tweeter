@@ -7,8 +7,8 @@ export default async function AuthPage({ form }: { form: string }) {
   const isRegister = form === 'register'
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between">
-      <div className="py-10 px-16 max-w-[500px] w-full my-auto gap-5 items-center flex flex-col sm:border rounded-3xl border-[#BDBDBD]">
+    <main className="flex min-h-screen h-dvh flex-col items-center justify-between">
+      <div className="py-10 h-full sm:h-fit w-full justify-center sm:border border-secondary bg-background2 px-16 sm:max-w-[500px] my-auto gap-5 items-center flex flex-col rounded-3xl">
         <div className="bg-[url('/devchallenges.svg')] dark:bg-[url('/devchallenges-light.svg')] bg-no-repeat min-h-[20px] w-full"></div>
         <h1 className="text-lg font-semibold w-full">{isRegister ? 'Join thousands of learners from around the world' : 'Login'}</h1>
         {isRegister ? (
@@ -21,12 +21,12 @@ export default async function AuthPage({ form }: { form: string }) {
           {isRegister ? (
             <p className="text-[#828282] text-sm">
               Adready a member?
-              <Link href="/login" className="text-[#2d98d6] ml-1">Login</Link>
+              <Link href="/login" className="text-[#2d98d6] hover:underline ml-1">Login</Link>
             </p>
           ) : (
             <p className="text-[#828282] text-sm">
               Don’t have an account yet? 
-              <Link href='/register' className="text-[#2d98d6] ml-1">Register</Link>
+              <Link href='/register' className="text-[#2d98d6] hover:underline ml-1">Register</Link>
             </p>
           )}
         </section>

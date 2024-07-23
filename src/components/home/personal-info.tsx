@@ -22,7 +22,7 @@ export default function PersonalInfo({ user }: { user?: AuthUser }) {
             <li key={attribute} className={`py-9 flex px-7 justify-between lg:justify-start items-center ${attributes.at(-1) !== attribute ? 'border-b border-b-secondary' : ''}`}>
               <h3 className='uppercase text-[#BDBDBD] w-[30%] min-w-[100px] text-sm font-medium'>{attribute}</h3>
               {attribute === 'photo' 
-                ? <Image src={user?.[attribute] || ''} width={72} height={72} className='rounded-lg' alt="Profile" />
+                ? <Image src={user?.[attribute] || '/user-icon.png'} width={72} height={72} className={`rounded-lg bg-secondary ${!user?.[attribute] ? 'p-2' : ''}`} alt="Profile" />
                 : <p className='text-base font-medium'>{attribute === 'password' ? '● '.repeat(10) : user?.[attribute as keyof AuthUser]}</p>}
             </li>
           )}
